@@ -1,0 +1,12 @@
+<%= render :partial => "devise/shared/devise_errors" %>
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, role: :form }) do |f| %>
+  <div class="form-group" style="margin-top: 10px;">
+    <%= f.email_field :email, :class => "form-control", :autofocus => true, :placeholder => 'Email' %>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block">Resend confirmation instructions</button>
+  <div class="shared-links">
+    <span class="small">
+      <%= render "devise/shared/links" %>
+    </span>
+  </div>  
+<% end %>
