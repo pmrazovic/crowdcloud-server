@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crowdcloud</title>
+    <title>CrowdCloud</title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
@@ -16,9 +16,9 @@
         <div class="row">
           <div class="col-lg-3"></div>
           <div class="col-lg-6">
-            <%= bootstrap_flash %>
+            <%= bootstrap_flash unless notice.blank? && alert.blank? %>
             <div class="logo">
-              
+                <%= image_tag 'logo.png' %>
             </div>
             <div class="col-lg-12">
               <%= yield %>
@@ -31,7 +31,7 @@
 
     <div id="footer">
       <div class="container">
-        <p class="version small pull-right footer-label"><span class="glyphicon glyphicon-copyright-mark"></span> <%= Date.today.year.to_s %> | <a class="version" href="http://kth.se" target="_blank">KTH Royal Institute of Technology</a> | CrowdCloud Portal (<%= REVISION %>)</p>
+        <p class="version small pull-right footer-label">© <%= Date.today.year.to_s %> | <a class="version" href="http://kth.se" target="_blank">KTH Royal Institute of Technology</a> | CrowdCloud Server (<%= REVISION %>)</p>
       </div>
     </div>
 
