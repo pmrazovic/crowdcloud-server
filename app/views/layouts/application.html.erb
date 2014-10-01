@@ -9,19 +9,40 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
+  <body class="gray-background">
 
-    <div class="navbar navbar-default navbar-static-top">
+    <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">CrowdCloud</a>
+        <a class="navbar-brand" href="#"><b><i class="fa fa-cloud"></i> CrowdCloud</b></a>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Devices", devices_path %></li>
+            <li class="<%= 'active' if controller.controller_name == "devices" %>">
+              <%= link_to "<i class=\"fa fa-laptop\"></i> Devices".html_safe, devices_path %>
+            </li>
+            <li class="<%= 'active' if controller.controller_name == "social_networks" %>">
+              <%= link_to "<i class=\"fa fa-group\"></i> Social Networks".html_safe, "#" %>
+            </li>
+            <li class="<%= 'active' if controller.controller_name == "open_calls" %>">
+              <%= link_to "<i class=\"fa fa-bell\"></i> Open calls".html_safe, "#" %>
+            </li>            
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-user"></i>
+                <%= "#{current_account.email}" %> <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <%= link_to "<i class=\"fa fa-sign-out\"></i> Sign out".html_safe, destroy_account_session_path, :method => :delete %>
+                </li>
+              </ul>
+            </li>          
           </ul>
         </div>
       </div>

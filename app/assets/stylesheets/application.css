@@ -20,11 +20,18 @@
   height: 100%;
   background-color: #eee;
 }
-
 html {
   height: 100%; 
 }
-
+.gray-background {
+  background-color: #eee;
+}
+.white-background {
+  background-color: white;
+}
+.drop-shadow {
+  box-shadow: rgba(0, 0, 0, 0.3) 8px 8px 8px;
+}
 .form-signin {
   max-width: 400px;
   margin: 0 auto;

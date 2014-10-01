@@ -1,3 +1,75 @@
-<h2>CrowdCloud</h2>
+<div class="row">
 
-<%= link_to "Log out", destroy_account_session_path, :method => :delete %>
+  <% @devices.each do |device| %>
+    <div class="col-lg-4">
+      <div class="panel panel-default drop-shadow">
+        <div class="panel-heading">
+          <h3 class="panel-title">Device information <small>(<%= device.uuid %>)</small></h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-5 center-text-align">
+              <i class="fa fa-android fa-4x"></i>
+              <div>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div class="small text-muted">
+                Global reputation
+              </div>              
+            </div>
+            <div class="col-lg-7">
+              <button class="btn btn-default btn-block"><i class="fa fa-cogs"></i> Manage device</button>
+              <%= link_to "<i class=\"fa fa-paper-plane\"></i> Push test message".html_safe, push_message_device_path(device), :class => "btn btn-default btn-block", :method => :post %>
+              <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block", :method => :delete %>
+            </div>            
+          </div>
+        </div>
+        <table class="table table-bordered table-condensed">
+          <tbody class="white-background">
+            <tr class="small">
+              <th>Platform</th>
+              <td><%= device.platform %></td>
+            </tr>
+            <tr class="small">
+              <th>Version</th>
+              <td><%= device.version %></td>
+            </tr>
+            <tr class="small">
+              <th>Model</th>
+              <td><%= device.model %></td>
+            </tr>                
+            <tr class="small">
+              <th>UUID</th>
+              <td><%= device.uuid %></td>
+            </tr>
+            <tr class="small">
+              <th>Name</th>
+              <td><%= device.name.blank? ? '<i class="fa fa-question"></i>'.html_safe : device.name %></td>
+            </tr>
+            <tr class="small">
+              <th>Push id</th>
+              <td><%= device.push_id %></td>
+            </tr>
+            <tr class="small">
+              <th>Registered at</th>
+              <td><%= device.created_at %></td>
+            </tr>
+            <tr>
+              <th class="small">Sensors</th>
+              <td>
+                <i class="fa fa-camera"></i>
+                <i class="fa fa-globe"></i>
+                <i class="fa fa-microphone"></i>
+                <i class="fa fa-compass"></i>              
+              </td>
+            </tr> 
+          </tbody>              
+        </table> 
+      </div>
+    </div>
+  <% end %>  
+</div>

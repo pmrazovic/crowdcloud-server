@@ -29,6 +29,7 @@ gem 'spring', group: :development
 
 gem 'devise', '3.3.0'
 gem 'twitter-bootstrap-rails', '3.2.0'
+gem 'urbanairship', '2.3.3'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

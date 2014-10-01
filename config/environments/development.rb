@@ -35,6 +35,11 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  Urbanairship.application_key = 'XTkKjb-9TKa54_MTy3aqGQ'
+  Urbanairship.application_secret = 'uPS6gXMMQbejgzs-QmYreA'
+  Urbanairship.master_secret = 'GsZRNeqmSOCEt4F1xI-6OQ'
+  Urbanairship.logger = Rails.logger
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = false
   config.action_mailer.perform_deliveries = true
@@ -49,5 +54,4 @@ Rails.application.configure do
   }
 
   REVISION = "Development Version"
-
 end

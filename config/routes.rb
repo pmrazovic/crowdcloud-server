@@ -1,7 +1,15 @@
 Rails.application.routes.draw do
   devise_for :accounts
 
-  resources :devices, :only => [:index]
+  resources :devices, :only => [:index] do
+    collection do
+      post 'register'
+    end
+    member do
+      post 'push_message'
+      delete 'unregister'
+    end
+  end
 
   root 'devices#index'
 
