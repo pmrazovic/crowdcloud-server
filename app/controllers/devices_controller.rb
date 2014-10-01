@@ -11,15 +11,15 @@ class DevicesController < ApplicationController
   end
 
   def register
-    new_device = Device.new( :uuid => params[:uuid],
-                             :platform => params[:platform],
-                             :model => params[:model],
-                             :version => params[:version],
-                             :name => params[:name],
-                             :push_id => params[:push_id] )
+    device = Device.find_or_initialize_by(:uuid => params[:uuid])
+    device.assign_attributes({ :platform => params[:platform],
+                               :model => params[:model],
+                               :version => params[:version],
+                               :name => params[:name],
+                               :push_id => params[:push_id] } )
 
     respond_to do |format|
-      format.json { render :json => "", :status => (new_device.save ? :ok : :internal_server_error)  }
+      format.json { render :json => "", :status => (device.save ? :ok : :internal_server_error)  }
     end
   end
 
