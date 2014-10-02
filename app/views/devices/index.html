@@ -52,7 +52,7 @@
             </tr>
             <tr class="small">
               <th>Push id</th>
-              <td><%= device.push_id %></td>
+              <td><%= truncate(device.push_id, :length => 25) %></td>
             </tr>
             <tr class="small">
               <th>Registered at</th>

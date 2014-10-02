@@ -12,14 +12,15 @@ class DevicesController < ApplicationController
 
   def register
     device = Device.find_or_initialize_by(:uuid => params[:uuid])
-    device.assign_attributes({ :platform => params[:platform],
-                               :model => params[:model],
-                               :version => params[:version],
-                               :name => params[:name],
-                               :push_id => params[:push_id] } )
+    device.update_attributes(device_parameters)
 
     respond_to do |format|
-      format.json { render :json => "", :status => (device.save ? :ok : :internal_server_error)  }
+      if device.save
+        reg_info = { :reg_id => device.id }
+        format.json { render :json => reg_info.to_json, :status => :ok }
+      else
+        format.json { render :json => "", :status => :internal_server_error }
+      end
     end
   end
 
@@ -35,14 +36,16 @@ class DevicesController < ApplicationController
 
   def push_message
     @device = Device.find_by_id(params[:id])
-    notification = {
-      :schedule_for => [Time.now],
-      :apids => [@device.push_id],
-      :android => {:alert => "Test message"}
-    }
 
-    Urbanairship.push(notification)
+    options = {data: {title: "Test message", message: "CrowdCloud server test"}}
+    response = GCM.send([@device.push_id], options)
 
     redirect_to :action => :index
   end
+
+  private
+    def device_parameters
+      params.require(:device).permit(:uuid, :push_id, :model, :version, :platform, :name)
+    end
+
 end

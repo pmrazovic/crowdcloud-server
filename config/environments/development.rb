@@ -1,3 +1,4 @@
+require 'gcm'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -35,10 +36,7 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  Urbanairship.application_key = 'XTkKjb-9TKa54_MTy3aqGQ'
-  Urbanairship.application_secret = 'uPS6gXMMQbejgzs-QmYreA'
-  Urbanairship.master_secret = 'GsZRNeqmSOCEt4F1xI-6OQ'
-  Urbanairship.logger = Rails.logger
+  GCM = GCM.new("AIzaSyBElRLFRvf2jVPF5U-uOxphuO8tip9G-5s")
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = false
