@@ -5,3 +5,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Account.find_or_create_by(:email => 'admin@crowdcloud.com') do |account|
+  account.password = 'password'
+  account.confirmed_at = Time.now
+end
+
+ResponseDataType.find_or_create_by(:name => 'GeoLocationData')
+ResponseDataType.find_or_create_by(:name => 'AccelerationData')
+ResponseDataType.find_or_create_by(:name => 'OrientationData')
+ResponseDataType.find_or_create_by(:name => 'TemperatureData')
+ResponseDataType.find_or_create_by(:name => 'IlluminationData')
+ResponseDataType.find_or_create_by(:name => 'AirPressureData')
+ResponseDataType.find_or_create_by(:name => 'AcousticsData')
