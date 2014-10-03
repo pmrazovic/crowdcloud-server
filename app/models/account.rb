@@ -4,5 +4,5 @@ class Account < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :open_calls, :dependent => :delete_all
+  has_many :open_calls, :dependent => :destroy
 end
