@@ -47,10 +47,6 @@
               <td><%= device.uuid %></td>
             </tr>
             <tr class="small">
-              <th>Name</th>
-              <td><%= device.name.blank? ? '<i class="fa fa-question"></i>'.html_safe : device.name %></td>
-            </tr>
-            <tr class="small">
               <th>Push id</th>
               <td><%= truncate(device.push_id, :length => 25) %></td>
             </tr>
