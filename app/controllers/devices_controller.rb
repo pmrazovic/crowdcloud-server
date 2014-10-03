@@ -45,7 +45,7 @@ class DevicesController < ApplicationController
 
   private
     def device_parameters
-      params.require(:device).permit(:uuid, :push_id, :model, :version, :platform, :name)
+      params.require(:device).permit(:uuid, :push_id, :model, :version, :platform)
     end
 
 end
