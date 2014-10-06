@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :open_calls
+
   root 'devices#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

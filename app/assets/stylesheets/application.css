@@ -91,3 +91,19 @@ html {
 .footer-label {
   padding-right: 20px;
 }
+.thin-border {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C8C8C8;
+}
+.page-title {
+  margin-bottom: 40px;
+}
+td.narrow-cell {
+  width: 30px;
+}
+ul.unindent-list{
+  list-style-type: none; 
+  padding: 0px; 
+  margin-left: 0px;
+}

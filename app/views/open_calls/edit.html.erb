@@ -1,0 +1,9 @@
+<ol class="breadcrumb thin-border">
+  <li><%= link_to "Open calls", open_calls_path %></li>
+  <li><%= link_to @open_call.name, open_call_path(@open_call) %></li>
+  <li class="active"> Edit open call</li>
+</ol>
+<div class="page-title">
+  <h2>Edit open call <span class="text-muted small"><i><%= @open_call.name %></i></span></h2>
+</div>
+<%= render :partial => 'form' %>

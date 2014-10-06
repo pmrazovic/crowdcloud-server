@@ -12,7 +12,7 @@ class DevicesController < ApplicationController
 
   def register
     device = Device.find_or_initialize_by(:uuid => params[:uuid])
-    device.update_attributes(device_parameters)
+    device.update_attributes(device_params)
 
     respond_to do |format|
       if device.save
@@ -44,7 +44,7 @@ class DevicesController < ApplicationController
   end
 
   private
-    def device_parameters
+    def device_params
       params.require(:device).permit(:uuid, :push_id, :model, :version, :platform)
     end
 

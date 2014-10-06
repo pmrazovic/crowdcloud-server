@@ -1,0 +1,75 @@
+<ol class="breadcrumb thin-border">
+  <li><%= link_to "Open calls", open_calls_path %></li>
+  <li class="active"><%= @open_call.name %></li>
+</ol>
+<div class="page-title">
+  <h2><%= @open_call.name %></h2>
+</div>
+
+
+<table class="table table-bordered white-background">
+  <tr>
+  <th>Status:</th>
+  <td><span class="label <%= status_label_type(@open_call) %>"><%= @open_call.status %></span></td>
+  </tr>
+  <tr>
+    <th>Crowdsourcer</th>
+    <td><%= @open_call.account.email %></td>
+  </tr>
+  <tr>
+    <th>Description</th>
+    <td><%= @open_call.description %></td>
+  </tr>
+  <tr>
+    <th>Created at</th>
+    <td><%= @open_call.created_at %></td>
+  </tr>
+  <tr>
+    <th>Updated at</th>
+    <td><%= @open_call.updated_at %></td>
+  </tr>
+
+  <tr>
+    <th rowspan="2">Response data types</th>
+  </tr>
+  <tr>
+    <td>
+      <ul class="unindent-list">
+        <% @open_call.response_data_types.order(:name).each do |type| %>
+          <li><%= response_data_type_icon(type).html_safe %> <%= type.name.underscore.humanize %></li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+
+  <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
+    <tr>
+      <th>Published at</th>
+      <td><%= @open_call.published_at %></td>
+    </tr> 
+  <% end %>
+  <% if @open_call.status == OpenCallStatus::FINISHED.to_s %>
+    <tr>
+      <th>Finished at</th>
+      <td><%= @open_call.finished_at %></td>
+    </tr> 
+  <% end %>
+</table>
+
+<div class="btn-group pull-right">
+  <% if @open_call.status == OpenCallStatus::PENDING.to_s %>
+    <%= link_to '<i class="fa fa-bell"></i> Publish'.html_safe,
+                  edit_open_call_path(@open_call), :class => 'btn btn-default' %>
+  <% end %>
+  <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
+    <%= link_to '<i class="fa fa-power-off"></i> Finish'.html_safe,
+                  edit_open_call_path(@open_call), :class => 'btn btn-default' %>
+  <% end %>
+  <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
+                edit_open_call_path(@open_call), :class => 'btn btn-default' %>
+  <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
+                open_call_path(@open_call),
+                :method => 'delete',
+                :data => { :confirm => 'Are you sure?' },
+                :class => 'btn btn-default' %>
+</div>

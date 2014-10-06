@@ -1,0 +1,58 @@
+<%= form_for @open_call, :html => { :class => "form-horizontal" } do |f| %>
+
+    <% if @open_call.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@open_call.errors.count, "error") %> prohibited this open call from being created:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @open_call.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :account_id, :value => current_account.id %>
+  <div class="form-group <%= 'has-error' if @open_call.errors.messages[:name] %>">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @open_call.errors.messages[:description] %>">
+    <%= f.label :description, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :description, :rows => 5, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :response_data_types, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <table class="table table-bordered white-background">
+        <% ResponseDataType.order(:name).each do |type| %>
+          <tr>
+            <td class="narrow-cell">
+              <%= check_box_tag("open_call[response_data_type_ids][]", type.id, type.id.in?(@open_call.response_data_types.collect(&:id))) %> 
+            </td>
+            <td class="narrow-cell"><%= response_data_type_icon(type).html_safe %></td>
+            <td><%= type.name.underscore.humanize %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= button_tag(:type => 'submit', :class => "btn btn-primary") do %>
+        <i class="fa fa-check"></i> Save open call
+      <% end %>
+      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, open_calls_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+
+<% end %>
