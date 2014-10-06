@@ -23,6 +23,9 @@
 html {
   height: 100%; 
 }
+body {
+  padding-bottom: 40px;
+}
 .gray-background {
   background-color: #eee;
 }
@@ -102,8 +105,15 @@ html {
 td.narrow-cell {
   width: 30px;
 }
+.label-cell {
+  width: 200px;
+  text-align: right;
+}
 ul.unindent-list{
   list-style-type: none; 
   padding: 0px; 
   margin-left: 0px;
+}
+td.high-cell {
+  height: 100px;
 }
