@@ -8,18 +8,17 @@
 
 <div class="btn-group" style="margin-bottom: 15px;">
   <% if @open_call.status == OpenCallStatus::PENDING.to_s && 
-        !@open_call.devices.blank? &&
-        !open_call.response_data_types.blank? %>
+        !@open_call.response_data_types.blank? %>
     <%= link_to '<i class="fa fa-bell"></i> Publish'.html_safe,
-                  edit_open_call_path(@open_call), :class => 'btn btn-default' %>
+                  publish_open_call_path(@open_call), :class => 'btn btn-default', :method => :post %>
   <% end %>
   <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
-    <%= link_to '<i class="fa fa-power-off"></i> Finish'.html_safe,
+    <%= link_to '<i class="fa fa-power-off"></i> Terminate'.html_safe,
                   edit_open_call_path(@open_call), :class => 'btn btn-default' %>
   <% end %>
   <% if @open_call.status == OpenCallStatus::PENDING.to_s && @open_call.devices.blank? %>
     <%= link_to '<i class="fa fa-desktop"></i> Add devices'.html_safe,
-                  edit_open_call_path(@open_call), :class => 'btn btn-default' %>
+                  "#", :class => 'btn btn-default' %>
   <% end %>
   <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
                 edit_open_call_path(@open_call), :class => 'btn btn-default' %>
@@ -46,7 +45,7 @@
   </tr>
   <tr>
     <th class="label-cell active">Description:</th>
-    <td colspan="2" class="high-cell"><%= @open_call.description %></td>
+    <td colspan="2"><%= @open_call.description %></td>
   </tr>
   <tr>
     <th class="label-cell active">Created at:</th>

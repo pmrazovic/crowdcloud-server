@@ -11,7 +11,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :open_calls
+  resources :open_calls do
+    member do
+      post 'publish'
+    end
+  end
 
   root 'devices#index'
 
