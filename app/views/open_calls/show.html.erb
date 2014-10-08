@@ -7,8 +7,7 @@
 </div>
 
 <div class="btn-group" style="margin-bottom: 15px;">
-  <% if @open_call.status == OpenCallStatus::PENDING.to_s && 
-        !@open_call.response_data_types.blank? %>
+  <% if !@open_call.response_data_types.blank? %>
     <%= link_to '<i class="fa fa-bell"></i> Publish'.html_safe,
                   publish_open_call_path(@open_call), :class => 'btn btn-default', :method => :post %>
   <% end %>

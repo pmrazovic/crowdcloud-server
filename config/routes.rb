@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :open_calls do
     member do
       post 'publish'
+      resources :responses, :only => [:index, :show, :create]
     end
   end
 
