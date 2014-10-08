@@ -12,7 +12,7 @@ Account.find_or_create_by(:email => 'admin@crowdcloud.com') do |account|
 end
 
 ResponseDataType.find_or_create_by(:name => 'GeoLocationData')
-ResponseDataType.find_or_create_by(:name => 'AccelerationData')
+ResponseDataType.find_or_create_by(:name => 'DeviceMotionData')
 ResponseDataType.find_or_create_by(:name => 'OrientationData')
 ResponseDataType.find_or_create_by(:name => 'TemperatureData')
 ResponseDataType.find_or_create_by(:name => 'IlluminationData')

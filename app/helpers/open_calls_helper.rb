@@ -22,7 +22,7 @@ module OpenCallsHelper
       '<i class="fa fa-lightbulb-o"></i>'
     when "OrientationData"
       '<i class="fa fa-compass"></i>'
-    when "AccelerationData"
+    when "DeviceMotionData"
       '<i class="fa fa-tachometer"></i>'
     when "TemperatureData"
       '<i class="fa fa-sun-o"></i>'
