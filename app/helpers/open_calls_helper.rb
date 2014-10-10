@@ -18,7 +18,7 @@ module OpenCallsHelper
       '<i class="fa fa-globe"></i>'
     when "AcousticsData"
       '<i class="fa fa-microphone"></i>'
-    when "IlluminationData"
+    when "LightData"
       '<i class="fa fa-lightbulb-o"></i>'
     when "OrientationData"
       '<i class="fa fa-compass"></i>'
