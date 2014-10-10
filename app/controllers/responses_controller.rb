@@ -13,7 +13,7 @@ class ResponsesController < ApplicationController
                                  :device => Device.where(:uuid => params[:device][:uuid]).first)
 
       params[:response_items].each do |item|
-        new_response_data = item.keys.first.constantize.create(item.values.first)
+        new_response_data = item.keys.first.constantize.create!(item.values.first)
         response.response_items.create!(:response_data => new_response_data)
       end
     rescue Exception => e

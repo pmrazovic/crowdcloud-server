@@ -11,15 +11,30 @@ class DevicesController < ApplicationController
   end
 
   def register
-    device = Device.find_or_initialize_by(:uuid => params[:uuid])
-    device.update_attributes(device_params)
+    begin
+      device = Device.find_or_initialize_by(:uuid => params[:uuid])
+      device.update_attributes!(device_params)
+      device.sensors.delete_all
+      params[:sensors].each do |sensor_params|
+        device.sensors.create!( sensor_params.permit(:vendor, 
+                                                    :name, 
+                                                    :sensor_type, 
+                                                    :version, 
+                                                    :max_range, 
+                                                    :power, 
+                                                    :resolution) )
+      end
 
-    respond_to do |format|
-      if device.save
-        reg_info = { :reg_id => device.id }
+      device.save!
+      reg_info = { :reg_id => device.id }
+      respond_to do |format|
         format.json { render :json => reg_info.to_json, :status => :ok }
-      else
-        format.json { render :json => "", :status => :internal_server_error }
+      end      
+    rescue Exception => e
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+      respond_to do |format|
+        format.json { render :json => e.message.to_json, :status => :internal_server_error }
       end
     end
   end
@@ -47,5 +62,4 @@ class DevicesController < ApplicationController
     def device_params
       params.require(:device).permit(:uuid, :push_id, :model, :version, :platform)
     end
-
 end

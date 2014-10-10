@@ -4,4 +4,5 @@ class Device < ActiveRecord::Base
   has_and_belongs_to_many :open_calls, :join_table => :open_call_participants
   has_many :responses
   has_many :response_items, :through => :responses
+  has_many :sensors, :dependent => :destroy
 end
