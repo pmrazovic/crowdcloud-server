@@ -41,21 +41,53 @@ class DevicesController < ApplicationController
 
   def unregister
     @device = Device.find_by_id(params[:id])
-    if @device.destroy
-      flash[:success] = "Device was successfuly unregistered from CrowdCloud!"
+  end
+
+  def destroy
+
+    @device = Device.find_by_id(params[:id])
+    password = params[:password]
+    if current_account.valid_password?(password)
+      if @device.destroy
+        flash[:success] = "Device was successfuly unregistered from CrowdCloud!"
+        redirect_to :action => :index
+      else
+        flash[:error] = "Unable to unregister selected device!"
+        redirect_to :action => :unregister
+      end
     else
-      flash[:error] = "Unable to unregister selected device!"
+      flash[:error] = "Incorrect password!"
+      redirect_to :action => :unregister
     end
-    redirect_to :action => :index
+  end
+
+  def compose_message
+    @device = Device.find_by_id(params[:id])
   end
 
   def push_message
     @device = Device.find_by_id(params[:id])
 
-    options = {data: {title: "Test message", message: "CrowdCloud server test"}}
-    response = GCM.send([@device.push_id], options)
+    if params[:message][:title].blank? || params[:message][:body].blank?
+      flash[:error] = "Message title and body can't be blank!"
+    else
+      flash[:success] = "Your message was successfully sent to device <b>#{@device.uuid}</b>!".html_safe
+      options = { data: { title: params[:message][:title], message: params[:message][:body] } }
+      response = GCM.send([@device.push_id], options)
+    end
+    render :action => :compose_message
+  end
 
-    redirect_to :action => :index
+  def sensors
+    @device = Device.find_by_id(params[:id])
+  end
+
+  def responses
+    @device = Device.find_by_id(params[:id])
+  end
+
+  def statistics
+    @device = Device.find_by_id(params[:id])
   end
 
   private

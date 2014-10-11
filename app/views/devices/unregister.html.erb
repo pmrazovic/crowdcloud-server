@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-laptop"></i> Devices'.html_safe, devices_path %></li>
+  <li class="active"><%= @device.uuid %></li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+
+  <div class="alert-message alert-message-danger">
+    <h4>Warning</h4>
+    <p>Are you sure you want to unregister (delete) this device from CrowdCloud? This action can't be undone.</p>
+    <%= form_tag device_path(@device), :method => :delete do %>
+      <div class="form-group">
+        <%= label_tag :password, t('.password') %>
+        <%= password_field_tag :password, nil, :class => "form-control input-sm", :required => true %>
+      </div>
+      <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i> Unregister</button>
+    <% end %>
+  </div>
+</div>

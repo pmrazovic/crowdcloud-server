@@ -117,3 +117,76 @@ ul.unindent-list{
 td.high-cell {
   height: 100px;
 }
+.breadcrumb>li+li:before {
+  color: rgba(204, 204, 204, 1); 
+  content: "\276F\00a0";
+}
+.list-group-item.active {
+  background-color: #444444;
+  border-color: #444444;
+}.list-group-item.active:hover {
+  background-color: #444444;
+  border-color: #444444;
+}
+.wrapword {
+  white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  white-space: pre-wrap;       /* css-3 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+  word-break: break-all;
+  white-space: normal;
+}
+.hero-widget { 
+  text-align: center; 
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+}
+.hero-widget .icon { 
+  display: block; 
+  font-size: 56px; 
+  line-height: 56px; 
+  margin-bottom: 5px; 
+  text-align: center; 
+}
+.hero-widget var { 
+  display: block; 
+  height: 30px; 
+  font-size: 30px; 
+  line-height: 30px; 
+  font-style: normal; 
+}
+.hero-widget label { 
+  font-size: 12px; 
+}
+.hero-widget .options { 
+  margin-top: 10px; 
+}
+.alert-message
+{
+  padding: 20px;
+  border-left: 3px solid #eee;
+}
+.alert-message h4
+{
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+.alert-message p:last-child
+{
+  margin-bottom: 0;
+}
+.alert-message-danger
+{
+  background-color: #fdf7f7;
+  border-color: #d9534f;
+}
+.alert-message-danger h4
+{
+  color: #d9534f;
+}
+td.platform-logo {
+  width: 170px; 
+  vertical-align: middle !important;
+  text-align: center !important;
+}

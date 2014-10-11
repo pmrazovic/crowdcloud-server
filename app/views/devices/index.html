@@ -1,8 +1,11 @@
+<ol class="breadcrumb">
+  <li class="active"><i class="fa fa-laptop"></i> Devices</li>
+</ol>
 <div class="row">
 
   <% @devices.each do |device| %>
     <div class="col-lg-4">
-      <div class="panel panel-default drop-shadow">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">Device information <small>(<%= device.uuid %>)</small></h3>
         </div>
@@ -22,8 +25,7 @@
               </div>              
             </div>
             <div class="col-lg-7">
-              <button class="btn btn-default btn-block"><i class="fa fa-cogs"></i> Manage device</button>
-              <%= link_to "<i class=\"fa fa-paper-plane\"></i> Push test message".html_safe, push_message_device_path(device), :class => "btn btn-default btn-block", :method => :post %>
+              <%= link_to '<i class="fa fa-cogs"></i> Manage device'.html_safe, device, :class => "btn btn-default btn-block" %>
               <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block", :method => :delete %>
             </div>            
           </div>
@@ -44,25 +46,16 @@
             </tr>                
             <tr class="small">
               <th>UUID</th>
-              <td><%= device.uuid %></td>
+              <td><samp class="text-info"><b><%= device.uuid %></b></samp></td>
             </tr>
             <tr class="small">
               <th>Push id</th>
-              <td><%= truncate(device.push_id, :length => 25) %></td>
+              <td><samp><%= truncate(device.push_id, :length => 28) %></samp></td>
             </tr>
             <tr class="small">
               <th>Registered at</th>
               <td><%= device.updated_at %></td>
             </tr>
-            <tr>
-              <th class="small">Sensors</th>
-              <td>
-                <i class="fa fa-camera"></i>
-                <i class="fa fa-globe"></i>
-                <i class="fa fa-microphone"></i>
-                <i class="fa fa-compass"></i>              
-              </td>
-            </tr> 
           </tbody>              
         </table> 
       </div>

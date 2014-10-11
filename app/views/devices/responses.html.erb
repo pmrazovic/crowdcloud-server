@@ -1,0 +1,16 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-laptop"></i> Devices'.html_safe, devices_path %></li>
+  <li class="active"><%= @device.uuid %></li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div class="alert alert-info" role="alert">
+    <h4>
+      <i class="fa fa-exclamation-triangle"></i> Information
+    </h4>
+    <p>
+      Page is under development!
+    </p>
+  </div>
+</div>
