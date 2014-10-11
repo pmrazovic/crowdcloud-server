@@ -1,3 +1,5 @@
+require 'android_sensor_type'
+
 class DevicesController < ApplicationController
   before_filter :authenticate_account!, :only => [:index]
   skip_before_filter :verify_authenticity_token, :only => [:register], :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -80,6 +82,7 @@ class DevicesController < ApplicationController
 
   def sensors
     @device = Device.find_by_id(params[:id])
+    @sensors = @device.sensors
   end
 
   def responses

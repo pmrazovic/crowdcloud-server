@@ -5,12 +5,39 @@
 <%= render :partial => "side_navigation" %>
 
 <div class="col-lg-9">
-  <div class="alert alert-info" role="alert">
-    <h4>
-      <i class="fa fa-exclamation-triangle"></i> Information
-    </h4>
-    <p>
-      Page is under development!
-    </p>
-  </div>
+  <% @sensors.each do |sensor| %>
+    <div class="panel panel-default small">
+      <div class="panel-heading">
+        <h4 class="panel-title"><%= sensor.name %></h4>
+      </div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th style="width: 150px;">Vendor</th>
+            <td><%= sensor.vendor %></td>
+          </tr>
+          <tr>
+            <th>Sensor type</th>
+            <td><samp><%= sensor.sensor_type %></samp></td>
+          </tr>
+          <tr>
+            <th>Version</th>
+            <td><%= sensor.version %></td>
+          </tr>
+          <tr>
+            <th>Max range</th>
+            <td><%= sensor.max_range %></td>
+          </tr>
+          <tr>
+            <th>Power</th>
+            <td><%= sensor.power %> mA</td>
+          </tr> 
+          <tr>
+            <th>Resolution</th>
+            <td><%= sensor.resolution %></td>
+          </tr>                              
+        </tbody>
+      </table>
+    </div>
+  <% end %>
 </div>

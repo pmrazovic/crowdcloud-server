@@ -5,61 +5,88 @@
 <%= render :partial => "side_navigation" %>
 
 <div class="col-lg-9">
-  <table class="table table-bordered small">
-    <tbody class="white-background">
-      <tr>
-        <th>Platform</th>
-        <td><%= @device.platform %></td>
-        <td rowspan="7" class="text-center active platform-logo">
-          <div class="hero-widget">
-                <div class="icon">
-                     <i class="fa fa-android fa-2x"></i> 
-                </div>
-                <div class="text">
-                  <var><%= @device.version %></var>
-                  <label class="text-muted"><%= @device.platform %> Device</label>
-                </div>
-            </div>        
-        </td>
-      </tr>
-      <tr>
-        <th>Version</th>
-        <td><%= @device.version %></td>
-      </tr>
-      <tr>
-        <th>Model</th>
-        <td><%= @device.model %></td>
-      </tr>                
-      <tr>
-        <th>UUID</th>
-        <td><samp class="text-info"><b><%= @device.uuid %></b></samp></td>
-      </tr>
-      <tr>
-        <th>Push id</th>
-        <td class="wrapword"><samp><%= @device.push_id %></samp></td>
-      </tr>
-      <tr>
-        <th>Reputation</th>
-        <td>
-          <div>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-half-o"></i>
-            <i class="fa fa-star-o"></i>
-          </div>
-          <div class="small text-muted">
-            Global reputation
-          </div>  
-        </td>
-      </tr>
-      <tr>
-        <th style="width: 120px;">Registered at</th>
-        <td>
-          <i class="fa fa-calendar"></i> <%= @device.updated_at.to_date %>
-          <i class="fa fa-clock-o"></i> <%= @device.updated_at.strftime("%H:%M %z") %>
-        </td>
-      </tr>
-    </tbody>              
-  </table> 
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Device information</h4>
+    </div>
+    <table class="table table-bordered small">
+      <tbody class="white-background">
+        <tr>
+          <th>Platform</th>
+          <td><%= @device.platform %></td>
+          <td rowspan="7" class="text-center warning platform-logo">
+            <div class="hero-widget">
+                  <div class="icon">
+                    <i class="fa fa-android fa-2x"></i> 
+                  </div>
+                  <div class="text">
+                    <var><%= @device.version %></var>
+                    <label class="text-muted"><%= @device.platform %> Device</label>
+                  </div>
+              </div>        
+          </td>
+        </tr>
+        <tr>
+          <th>Version</th>
+          <td><%= @device.version %></td>
+        </tr>
+        <tr>
+          <th>Model</th>
+          <td><%= @device.model %></td>
+        </tr>                
+        <tr>
+          <th>UUID</th>
+          <td><samp class="text-info"><b><%= @device.uuid %></b></samp></td>
+        </tr>
+        <tr>
+          <th>Push id</th>
+          <td class="wrapword"><samp><%= @device.push_id %></samp></td>
+        </tr>
+        <tr>
+          <th>Reputation</th>
+          <td>
+            <div>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <div class="small text-muted">
+              Global reputation
+            </div>  
+          </td>
+        </tr>
+        <tr>
+          <th style="width: 120px;">Registered at</th>
+          <td>
+            <i class="fa fa-calendar"></i> <%= @device.updated_at.to_date %>
+            <i class="fa fa-clock-o"></i> <%= @device.updated_at.strftime("%H:%M %z") %>
+          </td>
+        </tr>
+      </tbody>              
+    </table>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Sensors</h4>
+    </div>
+    <table class="table table-bordered small">
+      <tbody>
+        <% AndroidSensorType.each do |type_id, type_name| %>
+          <tr>
+            <td><b><%= type_name %></b> (<samp><%= type_id %></samp>)</td>
+            <td class="<%= @device.has_sensor?(type_id.to_s) ? 'success' : 'danger' %> text-center" style="width: 170px;">
+              <%= @device.has_sensor?(type_id.to_s) ? 
+              '<i class="fa fa-check text-success"></i>'.html_safe : 
+              '<i class="fa fa-times text-danger"></i>'.html_safe %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
 </div>
