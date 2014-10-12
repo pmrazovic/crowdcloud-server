@@ -1,0 +1,14 @@
+<ol class="breadcrumb">
+  <li><%= link_to "Open calls", open_calls_path %></li>
+  <li><%= link_to @open_call.name, open_call_path(@open_call) %></li>
+  <li class="active"> Publish</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div class="alert-message alert-message-danger">
+    <h4>Warning</h4>
+    <p>Are you sure you want to publish this open call, i.e. send response request to devices in CrowdCloud?</p>
+    <%= link_to '<i class="fa fa-check"></i> Yes I\'m sure'.html_safe, publish_open_call_path(@open_call), :class => "btn btn-default", :method => :post %>
+  </div>
+</div>

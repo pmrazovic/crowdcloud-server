@@ -2,92 +2,67 @@
   <li><%= link_to "Open calls", open_calls_path %></li>
   <li class="active"><%= @open_call.name %></li>
 </ol>
-<div class="page-title">
-  <h2>Manage open call <span class="text-muted small"><i><%= @open_call.name %></i></span></h2>
-</div>
+<%= render :partial => "side_navigation" %>
 
-<div class="btn-group" style="margin-bottom: 15px;">
-  <% if !@open_call.response_data_types.blank? %>
-    <%= link_to '<i class="fa fa-bell"></i> Publish'.html_safe,
-                  publish_open_call_path(@open_call), :class => 'btn btn-default', :method => :post %>
-  <% end %>
-  <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
-    <%= link_to '<i class="fa fa-power-off"></i> Terminate'.html_safe,
-                  edit_open_call_path(@open_call), :class => 'btn btn-default' %>
-  <% end %>
-  <% if @open_call.status == OpenCallStatus::PENDING.to_s && @open_call.devices.blank? %>
-    <%= link_to '<i class="fa fa-desktop"></i> Add devices'.html_safe,
-                  "#", :class => 'btn btn-default' %>
-  <% end %>
-  <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
-                edit_open_call_path(@open_call), :class => 'btn btn-default' %>
-  <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
-                open_call_path(@open_call),
-                :method => 'delete',
-                :data => { :confirm => 'Are you sure?' },
-                :class => 'btn btn-default' %>
-</div>
+<div class="col-lg-9">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">Device information</h4>
+    </div>
+    <table class="table table-bordered small">
+      <tbody>
+        <tr>
+          <th>Name</th>
+          <td><%= @open_call.name %></td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td><span class="label <%= status_label_type(@open_call) %>"><%= @open_call.status %></span></td>
+        </tr>
+        <tr>
+          <th>Crowdsourcer</th>
+          <td><%= @open_call.account.email %></td>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <td><%= @open_call.description %></td>
+        </tr>
+        <tr>
+          <th>Created at</th>
+          <td><%= @open_call.created_at %></td>
+        </tr>
+        <tr>
+          <th>Updated at</th>
+          <td><%= @open_call.updated_at %></td>
+        </tr>
+        <tr>
+          <th style="width: 180px;">Response data types</th>
+          <td>
+            <table class="table table-bordered" style="width: 300px;">
+              <% @open_call.response_data_types.order(:name).each do |type| %>
+                <tr>
+                  <td class="narrow-cell"><%= response_data_type_icon(type).html_safe %></td>
+                  <td><%= type.name.underscore.humanize %></td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+        </tr>
 
-<table class="table table-bordered white-background">
-  <tr>
-    <th colspan="3" class="info text-center">
-      <%= @open_call.name %>
-    </th>
-  </tr>
-  <tr>
-    <th class="label-cell active">Status:</th>
-    <td colspan="2"><span class="label <%= status_label_type(@open_call) %>"><%= @open_call.status %></span></td>
-  </tr>
-  <tr>
-    <th class="label-cell active">Crowdsourcer:</th>
-    <td colspan="2"><%= @open_call.account.email %></td>
-  </tr>
-  <tr>
-    <th class="label-cell active">Description:</th>
-    <td colspan="2"><%= @open_call.description %></td>
-  </tr>
-  <tr>
-    <th class="label-cell active">Created at:</th>
-    <td colspan="2"><%= @open_call.created_at %></td>
-  </tr>
-  <tr>
-    <th class="label-cell active">Updated at:</th>
-    <td colspan="2"><%= @open_call.updated_at %></td>
-  </tr>
-
-  <tr>
-    <th rowspan="<%= @open_call.response_data_types.count + 1 %>" class="label-cell active">Response data types:</th>
-    <% @open_call.response_data_types.order(:name).each do |type| %>
-      <tr>
-        <td class="narrow-cell"><%= response_data_type_icon(type).html_safe %></td>
-        <td><%= type.name.underscore.humanize %></td>
-      </tr>
-    <% end %>
-  </tr>
-
-  <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
-    <tr>
-      <th class="label-cell active">Published at:</th>
-      <td colspan="2"><%= @open_call.published_at %></td>
-    </tr> 
-  <% end %>
-  <% if @open_call.status == OpenCallStatus::FINISHED.to_s %>
-    <tr>
-      <th class="label-cell active">Finished at:</th>
-      <td colspan="2"><%= @open_call.finished_at %></td>
-    </tr> 
-  <% end %>
-
-  <tr>
-    <th class="label-cell active">Devices:</th>
-    <td colspan="2">
-      <ul class="list-unindent">
-        <% @open_call.devices.each do |device| %>
-          <li>
-            <b><%= device.uuid %></b> (<%= device.model %>)
-          </li>
+        <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
+          <tr>
+            <th>Published at</th>
+            <td><%= @open_call.published_at %></td>
+          </tr> 
+        <% elsif @open_call.status == OpenCallStatus::FINISHED.to_s %>
+          <tr>
+            <th>Finished at</th>
+            <td><%= @open_call.finished_at %></td>
+          </tr> 
         <% end %>
-      </ul>
-    </td>
-  </tr>
-</table>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>

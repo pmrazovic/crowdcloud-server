@@ -1,6 +1,7 @@
 <ol class="breadcrumb">
   <li><%= link_to '<i class="fa fa-laptop"></i> Devices'.html_safe, devices_path %></li>
-  <li class="active"><%= @device.uuid %></li>
+  <li><%= link_to @device.uuid, @device %></li>
+  <li class="active">Responses</li>
 </ol>
 <%= render :partial => "side_navigation" %>
 

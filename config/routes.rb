@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   resources :open_calls do
     member do
+      get 'delete'
+      get 'confirm_publish'
+      get 'devices'
+      get 'responses'
       post 'publish'
       resources :responses, :only => [:index, :show, :create]
     end

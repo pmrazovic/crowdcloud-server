@@ -46,7 +46,6 @@ class DevicesController < ApplicationController
   end
 
   def destroy
-
     @device = Device.find_by_id(params[:id])
     password = params[:password]
     if current_account.valid_password?(password)

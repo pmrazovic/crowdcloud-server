@@ -2,63 +2,75 @@
   <li class="active"><i class="fa fa-laptop"></i> Devices</li>
 </ol>
 <div class="row">
+  <div class="col-lg-12">
 
-  <% @devices.each do |device| %>
-    <div class="col-lg-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Device information <small>(<%= device.uuid %>)</small></h3>
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-lg-5 center-text-align">
-              <i class="fa fa-android fa-4x"></i>
-              <div>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
-                <i class="fa fa-star-o"></i>
-              </div>
-              <div class="small text-muted">
-                Global reputation
-              </div>              
-            </div>
-            <div class="col-lg-7">
-              <%= link_to '<i class="fa fa-cogs"></i> Manage device'.html_safe, device, :class => "btn btn-default btn-block" %>
-              <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block", :method => :delete %>
-            </div>            
-          </div>
-        </div>
-        <table class="table table-bordered table-condensed">
-          <tbody class="white-background">
-            <tr class="small">
-              <th>Platform</th>
-              <td><%= device.platform %></td>
-            </tr>
-            <tr class="small">
-              <th>Version</th>
-              <td><%= device.version %></td>
-            </tr>
-            <tr class="small">
-              <th>Model</th>
-              <td><%= device.model %></td>
-            </tr>                
-            <tr class="small">
-              <th>UUID</th>
-              <td><samp class="text-info"><b><%= device.uuid %></b></samp></td>
-            </tr>
-            <tr class="small">
-              <th>Push id</th>
-              <td><samp><%= truncate(device.push_id, :length => 28) %></samp></td>
-            </tr>
-            <tr class="small">
-              <th>Registered at</th>
-              <td><%= device.updated_at %></td>
-            </tr>
-          </tbody>              
-        </table> 
+    <% if @devices.empty? %>
+
+      <div class="alert alert-info" role="alert">
+        There are currently no devices registered in CrowdCloud!
       </div>
-    </div>
-  <% end %>  
+
+    <% else %>
+      <div class="row">
+        <% @devices.each do |device| %>
+          <div class="col-lg-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Device information <small>(<%= device.uuid %>)</small></h3>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-lg-5 center-text-align">
+                    <i class="fa fa-android fa-4x"></i>
+                    <div>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-half-o"></i>
+                      <i class="fa fa-star-o"></i>
+                    </div>
+                    <div class="small text-muted">
+                      Global reputation
+                    </div>              
+                  </div>
+                  <div class="col-lg-7">
+                    <%= link_to '<i class="fa fa-cogs"></i> Manage device'.html_safe, device, :class => "btn btn-default btn-block" %>
+                    <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block" %>
+                  </div>            
+                </div>
+              </div>
+              <table class="table table-bordered table-condensed">
+                <tbody class="white-background">
+                  <tr class="small">
+                    <th>Platform</th>
+                    <td><%= device.platform %></td>
+                  </tr>
+                  <tr class="small">
+                    <th>Version</th>
+                    <td><%= device.version %></td>
+                  </tr>
+                  <tr class="small">
+                    <th>Model</th>
+                    <td><%= device.model %></td>
+                  </tr>                
+                  <tr class="small">
+                    <th>UUID</th>
+                    <td><samp class="text-info"><b><%= device.uuid %></b></samp></td>
+                  </tr>
+                  <tr class="small">
+                    <th>Push id</th>
+                    <td><samp><%= truncate(device.push_id, :length => 28) %></samp></td>
+                  </tr>
+                  <tr class="small">
+                    <th>Registered at</th>
+                    <td><%= device.updated_at %></td>
+                  </tr>
+                </tbody>              
+              </table> 
+            </div>
+          </div>
+        <% end %>  
+      </div>
+    <% end %>  
+  </div>
 </div>

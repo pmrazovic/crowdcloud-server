@@ -1,52 +1,55 @@
-<div class="page-title">
-  <h2 class="main-title">Open Calls</h2>
-</div>
+<ol class="breadcrumb">
+  <li class="active"><i class="fa fa-bell"></i> Open calls</li>
+</ol>
 
-<% if @open_calls.empty? %>
+<div class="row">
+  <div class="col-lg-12">
 
-  <div class="alert alert-info" role="alert">
-    There are currently no open call created in CrowdCloud!
+    <% if @open_calls.empty? %>
+
+      <div class="alert alert-info" role="alert">
+        There are currently no open call created in CrowdCloud!
+      </div>
+
+    <% else %>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Crowdsourcer</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @open_calls.each do |open_call| %>
+            <tr>
+              <td><%= link_to open_call.id, open_call_path(open_call) %></td>
+              <td><span class="label <%= status_label_type(open_call) %>"><%= open_call.status %></span></td>
+              <td><%= open_call.name %></td>
+              <td><%= open_call.account.email %></td>
+              <td><%= truncate(open_call.description, :length => 60) %></td>
+              <td>
+                <%= link_to '<i class="fa fa-cogs"></i> Manage'.html_safe,
+                            open_call_path(open_call), :class => 'btn btn-default btn-sm' %>
+                <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
+                            edit_open_call_path(open_call), :class => 'btn btn-default btn-sm' %>
+                <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
+                            delete_open_call_path(open_call),
+                            :class => 'btn btn-sm btn-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+
+    <%= link_to '<i class="fa fa-file-text-o"></i> Create new open call'.html_safe,
+                new_open_call_path,
+              :class => 'btn btn-primary' %>
   </div>
-
-<% else %>
-
-  <table class="table white-background table-bordered">
-    <thead>
-      <tr>
-        <th>Id</th>
-        <th>Status</th>
-        <th>Name</th>
-        <th>Crowdsourcer</th>
-        <th>Description</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @open_calls.each do |open_call| %>
-        <tr>
-          <td><%= link_to open_call.id, open_call_path(open_call) %></td>
-          <td><span class="label <%= status_label_type(open_call) %>"><%= open_call.status %></span></td>
-          <td><%= open_call.name %></td>
-          <td><%= open_call.account.email %></td>
-          <td><%= truncate(open_call.description, :length => 60) %></td>
-          <td>
-            <%= link_to "Manage",
-                        open_call_path(open_call), :class => 'btn btn-default btn-xs' %>
-            <%= link_to "Edit",
-                        edit_open_call_path(open_call), :class => 'btn btn-default btn-xs' %>
-            <%= link_to "Delete",
-                        open_call_path(open_call),
-                        :method => :delete,
-                        :data => { :confirm => 'Are you sure?' },
-                        :class => 'btn btn-xs btn-danger' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-<% end %>
-
-<%= link_to '<i class="fa fa-pencil-square-o"></i> Create new open call'.html_safe,
-            new_open_call_path,
-            :class => 'btn btn-primary' %>
+</div>

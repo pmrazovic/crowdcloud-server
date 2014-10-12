@@ -1,6 +1,6 @@
 require 'open_call_status'
 class OpenCallsController < ApplicationController
-  before_action :set_open_call, only: [:show, :edit, :update, :destroy, :publish]
+  before_action :set_open_call, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :responses, :devices]
 
   def index
     @open_calls = OpenCall.all
@@ -30,6 +30,9 @@ class OpenCallsController < ApplicationController
 
   def update
     respond_to do |format|
+      unless params[:open_call].has_key?(:response_data_type_ids)
+        params[:open_call][:response_data_type_ids] = []
+      end
       if @open_call.update(open_call_params)
         format.html { redirect_to @open_call, notice: 'Open call was successfully updated.' }
       else
@@ -38,11 +41,26 @@ class OpenCallsController < ApplicationController
     end
   end
 
+  def delete
+  end
+
   def destroy
-    @open_call.destroy
-    respond_to do |format|
-      format.html { redirect_to open_calls_url, notice: 'Open call was successfully destroyed.' }
+    password = params[:password]
+    if current_account.valid_password?(password)
+      if @open_call.destroy
+        flash[:success] = "Open call was successfuly removed from CrowdCloud!"
+        redirect_to :action => :index
+      else
+        flash[:error] = "Unable to remove open call!"
+        redirect_to :action => :delete
+      end
+    else
+      flash[:error] = "Incorrect password!"
+      redirect_to :action => :delete
     end
+  end
+
+  def confirm_publish
   end
 
   def publish
@@ -63,6 +81,12 @@ class OpenCallsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @open_call, notice: 'Open call is successfully published.' }
     end
+  end
+
+  def devices
+  end
+
+  def responses
   end
 
   private
