@@ -10,6 +10,8 @@
   <% @response.response_items.each do |response_item| %>
     <% if response_item.response_data_type == 'GeoLocationData' %>
       <%= render :partial => 'response_items/geo_location_data_response', :locals => { :data => response_item.response_data }  %>
+    <% elsif response_item.response_data_type == 'LightData' %>
+      <%= render :partial => 'response_items/light_data_response', :locals => { :data => response_item.response_data }  %>
     <% end %>
   <% end %>
 </div>

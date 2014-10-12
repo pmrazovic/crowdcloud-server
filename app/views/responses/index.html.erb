@@ -32,7 +32,7 @@
                 <span style="margin-right: 5px;"><%= response_data_type_icon(type).html_safe %></span>
               <% end %>
             </td>
-            <td><%= link_to '<i class="fa fa-search"></i> More details'.html_safe, [@open_call, response], :class => "btn btn-primary btn-sm" %></td>
+            <td><%= link_to '<i class="fa fa-search"></i> More details'.html_safe, [@open_call, response], 'data-no-turbolink' => true, :class => "btn btn-primary btn-sm" %></td>
           </tr>
         <% end %>
       </tbody>
