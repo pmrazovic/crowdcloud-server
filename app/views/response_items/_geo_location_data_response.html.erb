@@ -1,0 +1,49 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">Geo location data</h4>
+  </div>
+  <table class="table table-bordered small">
+    <tr>
+      <th style="width: 150px;">Created at</th>
+      <td><%= data.created_at %></td>
+    </tr>
+    <tr>
+      <th>Latitude</th>
+      <td><%= data.latitude %></td>
+    </tr>
+    <tr>
+      <th>Longiude</th>
+      <td><%= data.longitude %></td>
+    </tr>
+    <tr>
+      <th>Accuracy</th>
+      <td><%= data.accuracy %> m</td>
+    </tr>
+
+<!-- HTML5 geolocation doesn't return this data (missing native support for Android) -->
+<!--
+    <tr>
+      <th>Altitude</th>
+      <td><%= data.altitude %></td>
+    </tr>
+    <tr>
+      <th>Altitude accuracy</th>
+      <td><%= data.altitude_accuracy %></td>
+    </tr>
+    <tr>
+      <th>Heading</th>
+      <td><%= data.heading %></td>
+    </tr>
+    <tr>
+      <th>Speed</th>
+      <td><%= data.speed %></td>
+    </tr>
+ -->    
+
+    <tr>
+      <td colspan="2">
+        <%= render :partial => "response_items/google_map", :locals => { :latitude => data.latitude, :longitude => data.longitude } %>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,2 +1,15 @@
-<h1>Responses#show</h1>
-<p>Find me in app/views/responses/show.html.erb</p>
+<ol class="breadcrumb">
+  <li><%= link_to "Open calls", open_calls_path %></li>
+  <li><%= link_to @open_call.name, open_call_path(@open_call) %></li>
+  <li><%= link_to "Responses", open_call_responses_path(@open_call) %></li>
+  <li class="active"><%= @response.created_at %></li>
+</ol>
+<%= render :partial => "open_calls/side_navigation" %>
+
+<div class="col-lg-9">
+  <% @response.response_items.each do |response_item| %>
+    <% if response_item.response_data_type == 'GeoLocationData' %>
+      <%= render :partial => 'response_items/geo_location_data_response', :locals => { :data => response_item.response_data }  %>
+    <% end %>
+  <% end %>
+</div>

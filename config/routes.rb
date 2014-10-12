@@ -20,10 +20,9 @@ Rails.application.routes.draw do
       get 'delete'
       get 'confirm_publish'
       get 'devices'
-      get 'responses'
       post 'publish'
-      resources :responses, :only => [:index, :show, :create]
     end
+    resources :responses, :only => [:index, :show, :create]
   end
 
   root 'devices#index'

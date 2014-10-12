@@ -86,9 +86,6 @@ class OpenCallsController < ApplicationController
   def devices
   end
 
-  def responses
-  end
-
   private
     def set_open_call
       @open_call = OpenCall.find(params[:id])

@@ -1,15 +1,19 @@
 class ResponsesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create], :if => Proc.new { |c| c.request.format == 'application/json' }
   def index
+    @open_call = OpenCall.find(params[:open_call_id])
+    @responses = @open_call.responses
   end
 
   def show
+    @open_call = OpenCall.find(params[:open_call_id])
+    @response = Response.find(params[:id])    
   end
 
   def create
     status = :ok
     begin
-      response = Response.create!(:open_call => OpenCall.find(params[:id]),
+      response = Response.create!(:open_call => OpenCall.find(params[:open_call_id]),
                                  :device => Device.where(:uuid => params[:device][:uuid]).first)
 
       params[:response_items].each do |item|

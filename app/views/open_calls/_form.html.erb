@@ -37,7 +37,7 @@
             <td class="narrow-cell">
               <%= check_box_tag("open_call[response_data_type_ids][]", type.id, type.id.in?(@open_call.response_data_types.collect(&:id))) %> 
             </td>
-            <td class="narrow-cell"><%= response_data_type_icon(type).html_safe %></td>
+            <td class="narrow-cell"><%= response_data_type_icon(type.name).html_safe %></td>
             <td><%= type.name.underscore.humanize %></td>
           </tr>
         <% end %>

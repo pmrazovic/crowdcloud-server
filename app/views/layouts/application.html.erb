@@ -8,6 +8,7 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <%= yield(:google_maps_api) if content_for?(:google_maps_api) %>
   </head>
   <body>
 
@@ -27,7 +28,7 @@
             <li class="<%= 'active' if controller.controller_name == "social_networks" %>">
               <%= link_to "<i class=\"fa fa-group\"></i> Social Networks".html_safe, "#" %>
             </li>
-            <li class="<%= 'active' if controller.controller_name == "open_calls" %>">
+            <li class="<%= 'active' if controller.controller_name == "open_calls" || controller.controller_name == "responses" %>">
               <%= link_to "<i class=\"fa fa-bell\"></i> Open calls".html_safe, open_calls_path %>
             </li>            
           </ul>
