@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title">Light data</h4>
+    <h4 class="panel-title"><%= response_data_type_icon("LightData").html_safe %> Light data</h4>
   </div>
   <table class="table table-bordered small">
     <tr>
@@ -8,8 +8,93 @@
       <td><%= data.created_at %></td>
     </tr>
     <tr>
-      <th>Lumen</th>
-      <td><%= data.lumen %> lx</td>
+      <th>Illuminance</th>
+      <td><var><%= data.lumen %> lux</var></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+
+        <table class="table table-bordered">
+          <thead>
+            <tr class="active">
+              <th colspan="5">Referent values</th>
+            </tr>
+            <tr>
+              <th>Lighting condition</th>
+              <th>From (lux)</th>
+              <th>To (lux)</th>
+              <th>Mean value (lux)</th>
+              <th>Lighting step</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="<%= 'info' if data.lumen.between?(0, 10) %>">
+              <td>Pitch Black</td>
+              <td>0</td>
+              <td>10</td>
+              <td>5</td>
+              <td>1</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(11, 50) %>">
+              <td>Very Dark</td>
+              <td>11</td>
+              <td>50</td>
+              <td>30</td>
+              <td>2</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(51, 200) %>">
+              <td>Dark Indoors</td>
+              <td>51</td>
+              <td>200</td>
+              <td>125</td>
+              <td>3</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(201, 400) %>">
+              <td>Dim Indoors</td>
+              <td>201</td>
+              <td>400</td>
+              <td>300</td>
+              <td>4</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(401, 1000) %>">
+              <td>Normal Indoors</td>
+              <td>401</td>
+              <td>1000</td>
+              <td>700</td>
+              <td>5</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(1001, 5000) %>">
+              <td>Bright Indoors</td>
+              <td>1001</td>
+              <td>5000</td>
+              <td>3000</td>
+              <td>6</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(5001, 1000) %>">
+              <td>Dim Outdoors</td>
+              <td>5001</td>
+              <td>10,000</td>
+              <td>7500</td>
+              <td>7</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(10001, 30000) %>">
+              <td>Cloudy Outdoors</td>
+              <td>10,001</td>
+              <td>30,000</td>
+              <td>20,000</td>
+              <td>8</td>
+            </tr>
+            <tr class="<%= 'info' if data.lumen.between?(30001, 100000) %>">
+              <td>Direct Sunlight</td>
+              <td>30,001</td>
+              <td>100,000</td>
+              <td>65,000</td>
+              <td>9</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </td>
     </tr>
   </table>
 </div>

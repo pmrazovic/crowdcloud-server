@@ -1,0 +1,28 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title"><%= response_data_type_icon("OrientationData").html_safe %> Orientation data</h4>
+  </div>
+  <table class="table table-bordered small">
+    <tr>
+      <th style="width: 150px;">Created at</th>
+      <td><%= data.created_at %></td>
+    </tr>
+    <tr>
+      <th>Magnetic heading</th>
+      <td><var><%= data.magnetic_heading %>°</var></td>
+    </tr>
+    <tr>
+      <td colspan="2" class="text-center active">
+        <div style="background-image: url(<%= asset_path('compass.png') %>); 
+                    background-position: center; 
+                    background-repeat: no-repeat; 
+                    background-size: 180px;">
+          <%= image_tag "needle.png", :style => "height: 180px; 
+                                                -ms-transform: rotate(#{data.magnetic_heading.round}deg); 
+                                                -webkit-transform: rotate(#{data.magnetic_heading.round}deg);
+                                                transform: rotate(#{data.magnetic_heading.round}deg);" %>
+        </div>      
+      </td>
+    </tr>
+  </table>
+</div>

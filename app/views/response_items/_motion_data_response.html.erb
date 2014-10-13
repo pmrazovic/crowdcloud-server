@@ -1,0 +1,24 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title"><%= response_data_type_icon("MotionData").html_safe %> Motion data</h4>
+  </div>
+  <table class="table table-bordered small">
+    <tr>
+      <th style="width: 150px;">Created at</th>
+      <td><%= data.created_at %></td>
+      <td rowspan="4" class="text-center"><%= image_tag "axis_device.png", :style => "height: 130px;" %></td>
+    </tr>
+    <tr>
+      <th>Acceleration X</th>
+      <td><var><%= data.acceleration_x %> m/s<sup>2</sup></var></td>
+    </tr>
+    <tr>
+      <th>Acceleration Y</th>
+      <td><var><%= data.acceleration_y %> m/s<sup>2</sup></var></td>
+    </tr>
+    <tr>
+      <th>Acceleration X</th>
+      <td><var><%= data.acceleration_z %> m/s<sup>2</sup></var></td>
+    </tr>
+  </table>
+</div>

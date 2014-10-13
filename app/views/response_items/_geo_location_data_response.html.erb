@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title">Geo location data</h4>
+    <h4 class="panel-title"><%= response_data_type_icon("GeoLocationData").html_safe %> Geolocation data</h4>
   </div>
   <table class="table table-bordered small">
     <tr>
@@ -9,15 +9,15 @@
     </tr>
     <tr>
       <th>Latitude</th>
-      <td><%= data.latitude %></td>
+      <td><var><%= data.latitude %></var></td>
     </tr>
     <tr>
       <th>Longiude</th>
-      <td><%= data.longitude %></td>
+      <td><var><%= data.longitude %></var></td>
     </tr>
     <tr>
       <th>Accuracy</th>
-      <td><%= data.accuracy %> m</td>
+      <td><var><%= data.accuracy %> m</var></td>
     </tr>
 
 <!-- HTML5 geolocation doesn't return this data (missing native support for Android) -->

@@ -12,6 +12,10 @@
       <%= render :partial => 'response_items/geo_location_data_response', :locals => { :data => response_item.response_data }  %>
     <% elsif response_item.response_data_type == 'LightData' %>
       <%= render :partial => 'response_items/light_data_response', :locals => { :data => response_item.response_data }  %>
+    <% elsif response_item.response_data_type == 'MotionData' %>
+      <%= render :partial => 'response_items/motion_data_response', :locals => { :data => response_item.response_data }  %>
+    <% elsif response_item.response_data_type == 'OrientationData' %>
+      <%= render :partial => 'response_items/orientation_data_response', :locals => { :data => response_item.response_data }  %>
     <% end %>
   <% end %>
 </div>
