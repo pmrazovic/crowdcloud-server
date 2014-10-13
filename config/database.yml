@@ -8,5 +8,6 @@ development:
 
 production:
   adapter: postgresql
+  database: crowdcloud
   encoding: utf8
   pool: 5
