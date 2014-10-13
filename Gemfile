@@ -44,3 +44,4 @@ gem 'foreigner', '~> 1.6.1'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+ruby "2.1.3"

@@ -5,3 +5,8 @@ development:
   password: crowdcloud
   host: localhost
   encoding: utf8
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
