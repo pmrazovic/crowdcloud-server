@@ -38,4 +38,5 @@
       </tbody>
     </table>
   <% end %>
+  <%= will_paginate @responses, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
 </div>

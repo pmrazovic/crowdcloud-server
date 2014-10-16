@@ -3,7 +3,7 @@ class ResponsesController < ApplicationController
   skip_before_filter :authenticate_account!, :only => [:create]
   def index
     @open_call = OpenCall.find(params[:open_call_id])
-    @responses = @open_call.responses
+    @responses = @open_call.responses.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
