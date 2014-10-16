@@ -97,7 +97,8 @@ class OpenCallsController < ApplicationController
                          .collect{ |oc| { :id => oc.id, 
                                           :name => oc.name,
                                           :published_at => oc.published_at,
-                                          :crowdsourcer => oc.account.email }
+                                          :crowdsourcer => oc.account.email,
+                                          :responded => Response.exists?(:open_call_id => oc.id, :device_id => params[:device_id]) }
                                   }
     render :json => open_calls.to_json
   end
@@ -110,8 +111,10 @@ class OpenCallsController < ApplicationController
                   :created_at => oc.created_at,
                   :published_at => oc.published_at,
                   :response_data_types => oc.response_data_types.collect{ |t| t.name },
-                  :crowdsourcer => oc.account.email }
+                  :crowdsourcer => oc.account.email,
+                  :responded => Response.exists?(:open_call_id => oc.id, :device_id => params[:device_id]) }
 
+    puts params.inspect
     render :json => open_call.to_json
   end
 

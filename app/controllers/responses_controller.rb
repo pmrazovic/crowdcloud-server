@@ -14,17 +14,19 @@ class ResponsesController < ApplicationController
   def create
     status = :ok
     begin
-      response = Response.create!(:open_call => OpenCall.find(params[:id]),
-                                 :device => Device.where(:uuid => params[:device][:uuid]).first)
+      unless params[:response_items].blank?
+        response = Response.create!(:open_call => OpenCall.find(params[:id]),
+                                    :device => Device.where(:uuid => params[:device][:uuid]).first)
 
-      params[:response_items].each do |item|
-        new_response_data = item.keys.first.constantize.create!(item.values.first)
-        response.response_items.create!(:response_data => new_response_data)
+        params[:response_items].each do |item|
+          new_response_data = item.keys.first.constantize.create!(item.values.first)
+          response.response_items.create!(:response_data => new_response_data)
+        end
       end
     rescue Exception => e
+      status = :internal_server_error
       Rails.logger.error(e.message)
       Rails.logger.error(e.backtrace.join("\n"))
-      status = :internal_server_error
     end
 
     render :json => '', :status => status
