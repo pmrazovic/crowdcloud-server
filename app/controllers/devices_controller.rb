@@ -5,7 +5,7 @@ class DevicesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:register], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
-    @devices = Device.all
+    @devices = Device.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
   end
 
   def show

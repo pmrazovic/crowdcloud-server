@@ -69,7 +69,8 @@
               </table> 
             </div>
           </div>
-        <% end %>  
+        <% end %>
+        <%= will_paginate @device, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>  
       </div>
     <% end %>  
   </div>
