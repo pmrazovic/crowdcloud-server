@@ -2,9 +2,6 @@ Rails.application.routes.draw do
   devise_for :accounts
 
   resources :devices, :only => [:index, :show, :destroy] do
-    collection do
-      post 'register'
-    end
     member do
       get 'unregister'
       get 'sensors'
@@ -22,10 +19,18 @@ Rails.application.routes.draw do
       get 'devices'
       post 'publish'
     end
-    resources :responses, :only => [:index, :show, :create]
+    resources :responses, :only => [:index, :show]
   end
 
   root 'devices#index'
+
+  # API routes ---------------------------------------
+
+  get  'api/open_calls' => 'open_calls#list_open_calls'
+  get  'api/open_calls/:id' => 'open_calls#get_open_call'
+  post 'api/open_calls/:id/responses' => 'responses#create'
+  post 'api/devices/register' => 'devices#register'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

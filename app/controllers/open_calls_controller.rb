@@ -1,9 +1,11 @@
 require 'open_call_status'
 class OpenCallsController < ApplicationController
   before_action :set_open_call, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :responses, :devices]
+  skip_before_filter :authenticate_account!, :only => [:list_open_calls, :get_open_call]
+  skip_before_filter :verify_authenticity_token, :only => [:list_open_calls], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
-    @open_calls = OpenCall.all
+    @open_calls = OpenCall.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
@@ -84,6 +86,33 @@ class OpenCallsController < ApplicationController
   end
 
   def devices
+  end
+
+  # Open Calls Api -------------------
+
+  def list_open_calls
+    open_calls = OpenCall.where(:status => OpenCallStatus::PUBLISHED.to_s)
+                         .order("created_at DESC")
+                         .paginate(:page => params[:page], :per_page => 20)
+                         .collect{ |oc| { :id => oc.id, 
+                                          :name => oc.name,
+                                          :published_at => oc.published_at,
+                                          :crowdsourcer => oc.account.email }
+                                  }
+    render :json => open_calls.to_json
+  end
+
+  def get_open_call
+    oc = OpenCall.find(params[:id])
+    open_call = { :id => oc.id, 
+                  :name => oc.name,
+                  :description => oc.description,
+                  :created_at => oc.created_at,
+                  :published_at => oc.published_at,
+                  :response_data_types => oc.response_data_types.collect{ |t| t.name },
+                  :crowdsourcer => oc.account.email }
+
+    render :json => open_call.to_json
   end
 
   private

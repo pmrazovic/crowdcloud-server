@@ -1,7 +1,7 @@
 require 'android_sensor_type'
 
 class DevicesController < ApplicationController
-  before_filter :authenticate_account!, :only => [:index]
+  skip_before_filter :authenticate_account!, :only => [:register]
   skip_before_filter :verify_authenticity_token, :only => [:register], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index

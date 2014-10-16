@@ -3,6 +3,7 @@
 </ol>
 
 <div class="row">
+
   <div class="col-lg-12">
 
     <% if @open_calls.empty? %>
@@ -10,8 +11,16 @@
       <div class="alert alert-info" role="alert">
         There are currently no open call created in CrowdCloud!
       </div>
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new open call'.html_safe,
+            new_open_call_path,
+          :class => 'btn btn-primary' %>
 
     <% else %>
+
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new open call'.html_safe,
+              new_open_call_path,
+            :class => 'btn btn-primary',
+            :style => "margin-bottom: 20px;" %>
 
       <table class="table">
         <thead>
@@ -48,8 +57,7 @@
 
     <% end %>
 
-    <%= link_to '<i class="fa fa-file-text-o"></i> Create new open call'.html_safe,
-                new_open_call_path,
-              :class => 'btn btn-primary' %>
+    <%= will_paginate @open_calls, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
+
   </div>
 </div>
