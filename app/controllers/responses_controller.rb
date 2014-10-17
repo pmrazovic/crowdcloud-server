@@ -1,6 +1,7 @@
 class ResponsesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create], :if => Proc.new { |c| c.request.format == 'application/json' }
   skip_before_filter :authenticate_account!, :only => [:create]
+  load_and_authorize_resource :skip => [:create]
   def index
     @open_call = OpenCall.find(params[:open_call_id])
     @responses = @open_call.responses.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)

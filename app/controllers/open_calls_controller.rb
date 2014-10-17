@@ -2,6 +2,7 @@ require 'open_call_status'
 class OpenCallsController < ApplicationController
   before_action :set_open_call, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :responses, :devices]
   skip_before_filter :authenticate_account!, :only => [:list_open_calls, :get_open_call]
+  load_and_authorize_resource :skip => [:list_open_calls, :get_open_call]
   skip_before_filter :verify_authenticity_token, :only => [:list_open_calls], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index

@@ -34,8 +34,15 @@
                     </div>              
                   </div>
                   <div class="col-lg-7">
-                    <%= link_to '<i class="fa fa-cogs"></i> Manage device'.html_safe, device, :class => "btn btn-default btn-block" %>
-                    <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block" %>
+                    <% if can? :show, device %>
+                      <%= link_to '<i class="fa fa-cogs"></i> Manage device'.html_safe, device, :class => "btn btn-primary btn-block" %>
+                    <% end %>
+                    <% if (can? :sensors, device) && (current_account.role != AccountRole::ADMINISTRATOR.to_s) %>
+                      <%= link_to "<i class=\"fa fa-tachometer\"></i> Sensing ability".html_safe, sensors_device_path(device), :class => "btn btn-default btn-block" %>
+                    <% end %>                    
+                    <% if can? :Unregister, device %>
+                      <%= link_to "<i class=\"fa fa-trash-o\"></i> Unregister".html_safe, unregister_device_path(device), :class => "btn btn-danger btn-block" %>
+                    <% end %>
                   </div>            
                 </div>
               </div>

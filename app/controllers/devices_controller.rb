@@ -3,6 +3,7 @@ require 'android_sensor_type'
 class DevicesController < ApplicationController
   skip_before_filter :authenticate_account!, :only => [:register]
   skip_before_filter :verify_authenticity_token, :only => [:register], :if => Proc.new { |c| c.request.format == 'application/json' }
+  load_and_authorize_resource :skip => [:register]
 
   def index
     @devices = Device.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)

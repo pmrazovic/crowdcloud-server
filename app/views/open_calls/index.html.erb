@@ -39,16 +39,22 @@
               <td><%= link_to open_call.id, open_call_path(open_call) %></td>
               <td><span class="label <%= status_label_type(open_call) %>"><%= open_call.status %></span></td>
               <td><%= open_call.name %></td>
-              <td><%= open_call.account.email %></td>
+              <td><%= "#{open_call.account.first_name} #{open_call.account.last_name}" %></td>
               <td><%= truncate(open_call.description, :length => 60) %></td>
               <td>
-                <%= link_to '<i class="fa fa-cogs"></i> Manage'.html_safe,
+                <% if can? :show, open_call %>
+                  <%= link_to '<i class="fa fa-cogs"></i> Show'.html_safe,
                             open_call_path(open_call), :class => 'btn btn-default btn-sm' %>
-                <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
+                <% end %>
+                <% if can? :edit, open_call %>
+                  <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
                             edit_open_call_path(open_call), :class => 'btn btn-default btn-sm' %>
-                <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
+                <% end %>
+                <% if can? :delete, open_call %>
+                  <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
                             delete_open_call_path(open_call),
                             :class => 'btn btn-sm btn-danger' %>
+                <% end %>
               </td>
             </tr>
           <% end %>
