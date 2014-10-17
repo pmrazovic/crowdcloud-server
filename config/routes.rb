@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :accounts
+  devise_for :accounts, :controllers => { registrations: 'registrations' }
 
   resources :devices, :only => [:index, :show, :destroy] do
     member do

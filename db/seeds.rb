@@ -1,13 +1,10 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'account_role'
 
 Account.find_or_create_by(:email => 'admin@crowdcloud.com') do |account|
+  account.first_name = 'Admin'
+  account.last_name = 'Administratovic'
   account.password = 'password'
+  account.role = AccountRole::ADMINISTRATOR.to_s
   account.confirmed_at = Time.now
 end
 

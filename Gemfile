@@ -15,6 +15,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'spring', group: :development
 gem 'devise', '~> 3.3.0'
+gem 'cancan', '~> 1.6.10'
 gem 'twitter-bootstrap-rails', '~> 3.2.0'
 gem 'gcm', '~> 0.0.8'
 gem 'foreigner', '~> 1.6.1'
