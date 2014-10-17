@@ -2,7 +2,7 @@ require 'open_call_status'
 class OpenCallsController < ApplicationController
   before_action :set_open_call, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :responses, :devices]
   skip_before_filter :authenticate_account!, :only => [:list_open_calls, :get_open_call]
-  load_and_authorize_resource :skip => [:list_open_calls, :get_open_call]
+  load_and_authorize_resource :except => [:list_open_calls, :get_open_call]
   skip_before_filter :verify_authenticity_token, :only => [:list_open_calls], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
@@ -98,7 +98,8 @@ class OpenCallsController < ApplicationController
                          .collect{ |oc| { :id => oc.id, 
                                           :name => oc.name,
                                           :published_at => oc.published_at,
-                                          :crowdsourcer => oc.account.email,
+                                          :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
+                                          :crowdsourcer_email => oc.account.email,
                                           :responded => Response.exists?(:open_call_id => oc.id, :device_id => params[:device_id]) }
                                   }
     render :json => open_calls.to_json
@@ -112,7 +113,8 @@ class OpenCallsController < ApplicationController
                   :created_at => oc.created_at,
                   :published_at => oc.published_at,
                   :response_data_types => oc.response_data_types.collect{ |t| t.name },
-                  :crowdsourcer => oc.account.email,
+                  :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
+                  :crowdsourcer_email => oc.account.email,
                   :responded => Response.exists?(:open_call_id => oc.id, :device_id => params[:device_id]) }
 
     puts params.inspect
