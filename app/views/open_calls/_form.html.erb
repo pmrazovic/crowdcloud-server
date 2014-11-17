@@ -35,10 +35,10 @@
         <% ResponseDataType.order(:name).each do |type| %>
           <tr>
             <td class="narrow-cell">
-              <%= check_box_tag("open_call[response_data_type_ids][]", type.id, type.id.in?(@open_call.response_data_types.collect(&:id))) %> 
+              <%= check_box_tag("open_call[response_data_type_ids][]", type.id, type.id.in?(@open_call.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
             </td>
-            <td class="narrow-cell"><%= response_data_type_icon(type.name).html_safe %></td>
-            <td><%= type.name.underscore.humanize %></td>
+            <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= response_data_type_icon(type.name).html_safe %></td>
+            <td class="<%= type.enabled ? '' : 'text-muted' %>"><%= type.name.underscore.humanize %></td>
           </tr>
         <% end %>
       </table>
