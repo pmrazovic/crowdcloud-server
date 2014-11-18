@@ -1,0 +1,11 @@
+<ol class="breadcrumb">
+  <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
+  <li><%= link_to @sensing_task.name, sensing_task_path(@sensing_task) %></li>
+  <li class="active"> Edit sensing task</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <%= render :partial => 'form' %>
+</div>
+

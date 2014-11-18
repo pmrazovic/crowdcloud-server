@@ -16,8 +16,8 @@ class Ability
   def crowdsourcer
     can :manage, Account, :account_id => @account.id
     can [:index, :show, :sensors, :responses, :statistics], Device
-    can [:index, :show, :new, :create, :devices], OpenCall
-    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish], OpenCall, :account_id => @account.id
+    can [:index, :show, :new, :create, :devices], SensingTask
+    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish], SensingTask, :account_id => @account.id
     can [:index, :show], Response
   end
 

@@ -1,13 +1,13 @@
-require 'open_call_status'
-module OpenCallsHelper
+require 'sensing_task_status'
+module SensingTasksHelper
 
-  def status_label_type(open_call)
-    case open_call.status
-    when OpenCallStatus::PENDING.to_s
+  def status_label_type(sensing_task)
+    case sensing_task.status
+    when SensingTaskStatus::PENDING.to_s
       "label-default"
-    when OpenCallStatus::PUBLISHED.to_s
+    when SensingTaskStatus::PUBLISHED.to_s
       "label-success"
-    when OpenCallStatus::FINISHED.to_s
+    when SensingTaskStatus::FINISHED.to_s
       "label-primary"
     end    
   end

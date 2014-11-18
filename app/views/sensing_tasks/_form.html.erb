@@ -1,13 +1,13 @@
-<%= form_for @open_call, :html => { :class => "form-horizontal" } do |f| %>
+<%= form_for @sensing_task, :html => { :class => "form-horizontal" } do |f| %>
 
-    <% if @open_call.errors.any? %>
+    <% if @sensing_task.errors.any? %>
     <div id="error_expl" class="panel panel-danger">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= pluralize(@open_call.errors.count, "error") %> prohibited this open call from being created:</h3>
+        <h3 class="panel-title"><%= pluralize(@sensing_task.errors.count, "error") %> prohibited this sensing task from being created:</h3>
       </div>
       <div class="panel-body">
         <ul>
-        <% @open_call.errors.full_messages.each do |msg| %>
+        <% @sensing_task.errors.full_messages.each do |msg| %>
           <li><%= msg %></li>
         <% end %>
         </ul>
@@ -16,13 +16,13 @@
   <% end %>
 
   <%= f.hidden_field :account_id, :value => current_account.id %>
-  <div class="form-group <%= 'has-error' if @open_call.errors.messages[:name] %>">
+  <div class="form-group <%= 'has-error' if @sensing_task.errors.messages[:name] %>">
     <%= f.label :name, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_field :name, :class => 'form-control' %>
     </div>
   </div>
-  <div class="form-group <%= 'has-error' if @open_call.errors.messages[:description] %>">
+  <div class="form-group <%= 'has-error' if @sensing_task.errors.messages[:description] %>">
     <%= f.label :description, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">
       <%= f.text_area :description, :rows => 5, :class => 'form-control' %>
@@ -35,7 +35,7 @@
         <% ResponseDataType.order(:name).each do |type| %>
           <tr>
             <td class="narrow-cell">
-              <%= check_box_tag("open_call[response_data_type_ids][]", type.id, type.id.in?(@open_call.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
+              <%= check_box_tag("sensing_task[response_data_type_ids][]", type.id, type.id.in?(@sensing_task.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
             </td>
             <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= response_data_type_icon(type.name).html_safe %></td>
             <td class="<%= type.enabled ? '' : 'text-muted' %>"><%= type.name.underscore.humanize %></td>
@@ -48,9 +48,9 @@
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <%= button_tag(:type => 'submit', :class => "btn btn-primary") do %>
-        <i class="fa fa-check"></i> Save open call
+        <i class="fa fa-check"></i> Save sensing task
       <% end %>
-      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, open_calls_path, :class => 'btn btn-default' %>
+      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, sensing_tasks_path, :class => 'btn btn-default' %>
     </div>
   </div>
 

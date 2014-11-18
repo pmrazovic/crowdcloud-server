@@ -8,10 +8,10 @@ Account.find_or_create_by(:email => 'admin@crowdcloud.com') do |account|
   account.confirmed_at = Time.now
 end
 
-ResponseDataType.find_or_create_by(:name => 'GeoLocationData')
-ResponseDataType.find_or_create_by(:name => 'MotionData')
-ResponseDataType.find_or_create_by(:name => 'OrientationData')
-ResponseDataType.find_or_create_by(:name => 'TemperatureData')
-ResponseDataType.find_or_create_by(:name => 'LightData')
-ResponseDataType.find_or_create_by(:name => 'AirPressureData')
-ResponseDataType.find_or_create_by(:name => 'AcousticsData')
+ResponseDataType.find_or_create_by(:name => 'GeoLocationData', :enabled => true)
+ResponseDataType.find_or_create_by(:name => 'MotionData', :enabled => true)
+ResponseDataType.find_or_create_by(:name => 'OrientationData', :enabled => true)
+ResponseDataType.find_or_create_by(:name => 'TemperatureData', :enabled => false)
+ResponseDataType.find_or_create_by(:name => 'LightData', :enabled => true)
+ResponseDataType.find_or_create_by(:name => 'AirPressureData', :enabled => false)
+ResponseDataType.find_or_create_by(:name => 'AcousticsData', :enabled => false)

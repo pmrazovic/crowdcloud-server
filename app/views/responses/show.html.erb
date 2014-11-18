@@ -1,10 +1,10 @@
 <ol class="breadcrumb">
-  <li><%= link_to "Open calls", open_calls_path %></li>
-  <li><%= link_to @open_call.name, open_call_path(@open_call) %></li>
-  <li><%= link_to "Responses", open_call_responses_path(@open_call) %></li>
+  <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
+  <li><%= link_to @sensing_task.name, sensing_task_path(@sensing_task) %></li>
+  <li><%= link_to "Responses", sensing_task_responses_path(@sensing_task) %></li>
   <li class="active"><%= @response.created_at %></li>
 </ol>
-<%= render :partial => "open_calls/side_navigation" %>
+<%= render :partial => "sensing_tasks/side_navigation" %>
 
 <div class="col-lg-9">
   <% @response.response_items.each do |response_item| %>

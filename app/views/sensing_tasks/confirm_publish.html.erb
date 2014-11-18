@@ -1,0 +1,14 @@
+<ol class="breadcrumb">
+  <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
+  <li><%= link_to @sensing_task.name, sensing_task_path(@sensing_task) %></li>
+  <li class="active"> Publish</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div class="alert-message alert-message-danger">
+    <h4>Warning</h4>
+    <p>Are you sure you want to publish this sensing task, i.e. send response request to devices in CrowdCloud?</p>
+    <%= link_to '<i class="fa fa-check"></i> Yes I\'m sure'.html_safe, publish_sensing_task_path(@sensing_task), :class => "btn btn-default", :method => :post %>
+  </div>
+</div>

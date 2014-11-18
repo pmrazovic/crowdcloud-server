@@ -25,12 +25,12 @@
             <li class="<%= 'active' if controller.controller_name == "devices" %>">
               <%= link_to "<i class=\"fa fa-laptop\"></i> Devices".html_safe, devices_path %>
             </li>
+            <li class="<%= 'active' if controller.controller_name == "sensing_tasks" || controller.controller_name == "responses" %>">
+              <%= link_to "<i class=\"fa fa-rss\"></i> Sensing tasks".html_safe, sensing_tasks_path %>
+            </li>            
             <li class="<%= 'active' if controller.controller_name == "social_networks" %>">
               <%= link_to "<i class=\"fa fa-group\"></i> Social Networks".html_safe, "#" %>
             </li>
-            <li class="<%= 'active' if controller.controller_name == "open_calls" || controller.controller_name == "responses" %>">
-              <%= link_to "<i class=\"fa fa-bell\"></i> Open calls".html_safe, open_calls_path %>
-            </li>            
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="dropdown">

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :open_calls do
+  resources :sensing_tasks do
     member do
       get 'delete'
       get 'confirm_publish'
@@ -26,9 +26,9 @@ Rails.application.routes.draw do
 
   # API routes ---------------------------------------
 
-  get  'api/open_calls' => 'open_calls#list_open_calls'
-  get  'api/open_calls/:id' => 'open_calls#get_open_call'
-  post 'api/open_calls/:id/responses' => 'responses#create'
+  get  'api/sensing_tasks' => 'sensing_tasks#list_sensing_tasks'
+  get  'api/sensing_tasks/:id' => 'sensing_tasks#get_sensing_task'
+  post 'api/responses' => 'responses#create'
   post 'api/devices/register' => 'devices#register'
 
 

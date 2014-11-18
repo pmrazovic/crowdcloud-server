@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><%= link_to "Open calls", open_calls_path %></li>
-  <li class="active"><%= @open_call.name %></li>
+  <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
+  <li class="active"><%= @sensing_task.name %></li>
 </ol>
 <%= render :partial => "side_navigation" %>
 
@@ -13,33 +13,33 @@
       <tbody>
         <tr>
           <th>Name</th>
-          <td><%= @open_call.name %></td>
+          <td><%= @sensing_task.name %></td>
         </tr>
         <tr>
           <th>Status</th>
-          <td><span class="label <%= status_label_type(@open_call) %>"><%= @open_call.status %></span></td>
+          <td><span class="label <%= status_label_type(@sensing_task) %>"><%= @sensing_task.status %></span></td>
         </tr>
         <tr>
           <th>Crowdsourcer</th>
-          <td><%= @open_call.account.email %></td>
+          <td><%= @sensing_task.account.email %></td>
         </tr>
         <tr>
           <th>Description</th>
-          <td><%= @open_call.description %></td>
+          <td><%= @sensing_task.description %></td>
         </tr>
         <tr>
           <th>Created at</th>
-          <td><%= @open_call.created_at %></td>
+          <td><%= @sensing_task.created_at %></td>
         </tr>
         <tr>
           <th>Updated at</th>
-          <td><%= @open_call.updated_at %></td>
+          <td><%= @sensing_task.updated_at %></td>
         </tr>
         <tr>
           <th style="width: 180px;">Response data types</th>
           <td>
             <table class="table table-bordered" style="width: 300px;">
-              <% @open_call.response_data_types.order(:name).each do |type| %>
+              <% @sensing_task.response_data_types.order(:name).each do |type| %>
                 <tr>
                   <td class="narrow-cell"><%= response_data_type_icon(type.name).html_safe %></td>
                   <td><%= type.name.underscore.humanize %></td>
@@ -49,15 +49,15 @@
           </td>
         </tr>
 
-        <% if @open_call.status == OpenCallStatus::PUBLISHED.to_s %>
+        <% if @sensing_task.status == SensingTaskStatus::PUBLISHED.to_s %>
           <tr>
             <th>Published at</th>
-            <td><%= @open_call.published_at %></td>
+            <td><%= @sensing_task.published_at %></td>
           </tr> 
-        <% elsif @open_call.status == OpenCallStatus::FINISHED.to_s %>
+        <% elsif @sensing_task.status == SensingTaskStatus::FINISHED.to_s %>
           <tr>
             <th>Finished at</th>
-            <td><%= @open_call.finished_at %></td>
+            <td><%= @sensing_task.finished_at %></td>
           </tr> 
         <% end %>
 

@@ -1,0 +1,69 @@
+<ol class="breadcrumb">
+  <li class="active">Sensing tasks</li>
+</ol>
+
+<div class="row">
+
+  <div class="col-lg-12">
+
+    <% if @sensing_tasks.empty? %>
+
+      <div class="alert alert-info" role="alert">
+        There are currently no sensing tasks created in CrowdCloud!
+      </div>
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new sensing task'.html_safe,
+            new_sensing_task_path,
+          :class => 'btn btn-primary' %>
+
+    <% else %>
+
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new sensing task'.html_safe,
+              new_sensing_task_path,
+            :class => 'btn btn-primary',
+            :style => "margin-bottom: 20px;" %>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Crowdsourcer</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sensing_tasks.each do |sensing_task| %>
+            <tr>
+              <td><%= link_to sensing_task.id, sensing_task_path(sensing_task) %></td>
+              <td><span class="label <%= status_label_type(sensing_task) %>"><%= sensing_task.status %></span></td>
+              <td><%= sensing_task.name %></td>
+              <td><%= "#{sensing_task.account.first_name} #{sensing_task.account.last_name}" %></td>
+              <td><%= truncate(sensing_task.description, :length => 60) %></td>
+              <td>
+                <% if can? :show, sensing_task %>
+                  <%= link_to '<i class="fa fa-cogs"></i> Show'.html_safe,
+                            sensing_task_path(sensing_task), :class => 'btn btn-default btn-sm' %>
+                <% end %>
+                <% if can? :edit, sensing_task %>
+                  <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
+                            edit_sensing_task_path(sensing_task), :class => 'btn btn-default btn-sm' %>
+                <% end %>
+                <% if can? :delete, sensing_task %>
+                  <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
+                            delete_sensing_task_path(sensing_task),
+                            :class => 'btn btn-sm btn-danger' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+
+    <%= will_paginate @sensing_tasks, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
+
+  </div>
+</div>
