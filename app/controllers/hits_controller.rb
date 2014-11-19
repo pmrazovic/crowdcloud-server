@@ -1,5 +1,5 @@
-require 'human_intelligence_task_status'
-class HumanIntelligenceTasksController < ApplicationController
+require 'hit_status'
+class HitsController < ApplicationController
   before_action :set_hit, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, 
                                  :devices, :step_2, :confirm_step_2, :step_3, :confirm_step_3, :step_4, 
                                  :confirm_step_4, :finish_formulation]
@@ -8,14 +8,14 @@ class HumanIntelligenceTasksController < ApplicationController
   # skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
-    @hits = HumanIntelligenceTask.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
+    @hits = Hit.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
   end
 
   def show
   end
 
   def new
-    @hit = HumanIntelligenceTask.new
+    @hit = Hit.new
   end
 
   def edit
@@ -24,17 +24,17 @@ class HumanIntelligenceTasksController < ApplicationController
   # Creation steps
 
   def step_1
-    @hit = HumanIntelligenceTask.new()
+    @hit = Hit.new()
     unless params[:existing_hit_id].blank?
-      HumanIntelligenceTask.find(params[:existing_hit_id]).destroy
+      Hit.find(params[:existing_hit_id]).destroy
     end
   end
 
   def confirm_step_1
-    @hit = HumanIntelligenceTask.new(hit_params)
-    @hit.status = HumanIntelligenceTaskStatus::STEP_1.name.to_s
+    @hit = Hit.new(hit_params)
+    @hit.status = HitStatus::STEP_1.name.to_s
     if @hit.save
-      redirect_to step_2_human_intelligence_task_path(@hit)
+      redirect_to step_2_hit_path(@hit)
     else
       render :step_1
     end
@@ -44,50 +44,50 @@ class HumanIntelligenceTasksController < ApplicationController
   end
 
   def confirm_step_2
-    if @hit.status == HumanIntelligenceTaskStatus::STEP_1.name.to_s
-      @hit.status = HumanIntelligenceTaskStatus::STEP_2.name.to_s
+    if @hit.status == HitStatus::STEP_1.name.to_s
+      @hit.status = HitStatus::STEP_2.name.to_s
       @hit.save
     end
-    redirect_to step_3_human_intelligence_task_path(@hit)
+    redirect_to step_3_hit_path(@hit)
   end
 
   def step_3
   end
 
   def confirm_step_3
-    if @hit.status == HumanIntelligenceTaskStatus::STEP_2.name.to_s
-      @hit.status = HumanIntelligenceTaskStatus::STEP_3.name.to_s
+    if @hit.status == HitStatus::STEP_2.name.to_s
+      @hit.status = HitStatus::STEP_3.name.to_s
       @hit.save
     end
-    if params[:human_intelligence_task].blank?
-      params[:human_intelligence_task] = {:response_data_type_ids => []}
+    if params[:hit].blank?
+      params[:hit] = {:response_data_type_ids => []}
     end
     @hit.update_attributes(hit_params)
-    redirect_to step_4_human_intelligence_task_path(@hit)
+    redirect_to step_4_hit_path(@hit)
   end
 
   def step_4
   end
 
   def confirm_step_4
-    @hit.status = HumanIntelligenceTaskStatus::PENDING.name.to_s
+    @hit.status = HitStatus::PENDING.name.to_s
     @hit.save
     @hit.update_attributes(hit_params)
-    redirect_to human_intelligence_task_path(@hit)
+    redirect_to hit_path(@hit)
   end
 
   def finish_formulation
-    if @hit.status == HumanIntelligenceTaskStatus::STEP_1.name.to_s
-      redirect_to step_2_human_intelligence_task_path(@hit)
-    elsif @hit.status == HumanIntelligenceTaskStatus::STEP_2.name.to_s
-      redirect_to step_3_human_intelligence_task_path(@hit)
-    elsif  @hit.status == HumanIntelligenceTaskStatus::STEP_3.name.to_s
-      redirect_to step_4_human_intelligence_task_path(@hit)
+    if @hit.status == HitStatus::STEP_1.name.to_s
+      redirect_to step_2_hit_path(@hit)
+    elsif @hit.status == HitStatus::STEP_2.name.to_s
+      redirect_to step_3_hit_path(@hit)
+    elsif  @hit.status == HitStatus::STEP_3.name.to_s
+      redirect_to step_4_hit_path(@hit)
     end
   end
 
   def create
-    @hit = HumanIntelligenceTask.new(hit_params)
+    @hit = Hit.new(hit_params)
 
     respond_to do |format|
       if @hit.save
@@ -100,7 +100,7 @@ class HumanIntelligenceTasksController < ApplicationController
 
   def update
     respond_to do |format|
-      unless params[:human_intelligence_task].has_key?(:response_data_type_ids)
+      unless params[:hit].has_key?(:response_data_type_ids)
         params[:hit][:response_data_type_ids] = []
       end
       if @hit.update(hit_params)
@@ -135,7 +135,7 @@ class HumanIntelligenceTasksController < ApplicationController
 
   def publish
     # push_ids = @hit.devices.collect{|op| op.push_id}
-    @hit.status = HumanIntelligenceTaskStatus::PUBLISHED.to_s
+    @hit.status = HitStatus::PUBLISHED.to_s
     @hit.published_at = Time.now
     @hit.save
     push_ids = Device.all.collect{|d| d.push_id}
@@ -191,10 +191,10 @@ class HumanIntelligenceTasksController < ApplicationController
 
   private
     def set_hit
-      @hit = HumanIntelligenceTask.find(params[:id])
+      @hit = Hit.find(params[:id])
     end
 
     def hit_params
-      params.require(:human_intelligence_task).permit(:account_id, :question, :description, :response_data_type_ids => [])
+      params.require(:hit).permit(:account_id, :question, :description, :response_data_type_ids => [])
     end
 end

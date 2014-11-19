@@ -1,6 +1,6 @@
 class HitChoicesController < ApplicationController
   def new
-    @hit = HumanIntelligenceTask.find(params[:human_intelligence_task_id].to_i)
+    @hit = Hit.find(params[:hit_id].to_i)
     @hit_choice = HitChoice.new
 
     respond_to do |format|
@@ -46,7 +46,7 @@ class HitChoicesController < ApplicationController
   private
 
     def hit_choice_params
-      params.require(:hit_choice).permit(:human_intelligence_task_id, :description)
+      params.require(:hit_choice).permit(:hit_id, :description)
     end
 
 end

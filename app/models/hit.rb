@@ -1,4 +1,4 @@
-class HumanIntelligenceTask < ActiveRecord::Base
+class Hit < ActiveRecord::Base
   validates :question, :presence => true
   belongs_to :account
   has_and_belongs_to_many :response_data_types, :join_table => :context_data_types

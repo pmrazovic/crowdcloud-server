@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, hits_path %></li>
   <li class="active">New human intelligence task</li>
 </ol>
 
@@ -9,7 +9,7 @@
   <div class="col-lg-2"></div>
   <div class="col-lg-8">
     
-    <%= form_for @hit, :url => {:controller => 'human_intelligence_tasks', :action => 'confirm_step_1'}, :html => { :class => "form" } do |f| %>
+    <%= form_for @hit, :url => {:controller => 'hits', :action => 'confirm_step_1'}, :html => { :class => "form" } do |f| %>
       <% if @hit.errors.any? %>
         <div id="error_expl" class="panel panel-danger">
           <div class="panel-heading">
@@ -33,7 +33,7 @@
 
       <div class="row">
         <div class="col-lg-6">
-          <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, human_intelligence_tasks_path, :class => 'btn btn-block btn-lg btn-warning' %>
+          <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, hits_path, :class => 'btn btn-block btn-lg btn-warning' %>
         </div>
         <div class="col-lg-6">
           <%= button_tag(:type => 'submit', :class => "btn btn-block btn-lg btn-primary") do %>

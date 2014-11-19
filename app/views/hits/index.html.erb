@@ -12,13 +12,13 @@
         There are currently no human intelligence tasks created in CrowdCloud!
       </div>
       <%= link_to '<i class="fa fa-file-text-o"></i> Create new HIT'.html_safe,
-            step_1_human_intelligence_tasks_path,
+            step_1_hits_path,
           :class => 'btn btn-primary' %>
 
     <% else %>
 
       <%= link_to '<i class="fa fa-file-text-o"></i> Create new HIT'.html_safe,
-              step_1_human_intelligence_tasks_path,
+              step_1_hits_path,
             :class => 'btn btn-primary',
             :style => "margin-bottom: 20px;" %>
 
@@ -36,7 +36,7 @@
         <tbody>
           <% @hits.each do |hit| %>
             <tr>
-              <td><%= link_to hit.id, human_intelligence_task_path(hit) %></td>
+              <td><%= link_to hit.id, hit_path(hit) %></td>
               <td><%= hit_status_label_type(hit) %></span></td>
               <td><%= hit.question %></td>
               <td><%= "#{hit.account.first_name} #{hit.account.last_name}" %></td>
@@ -44,19 +44,19 @@
               <td>
                 <% if can? :finish_formulation, hit %>
                   <%= link_to '<i class="fa fa-history"></i> Continue creation'.html_safe,
-                            finish_formulation_human_intelligence_task_path(hit), :class => 'btn btn-default btn-sm' %>
+                            finish_formulation_hit_path(hit), :class => 'btn btn-default btn-sm' %>
                 <% end %>
                 <% if can? :show, hit %>
                   <%= link_to '<i class="fa fa-cogs"></i> Show'.html_safe,
-                            human_intelligence_task_path(hit), :class => 'btn btn-default btn-sm' %>
+                            hit_path(hit), :class => 'btn btn-default btn-sm' %>
                 <% end %>
                 <% if can? :edit, hit %>
                   <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
-                            edit_human_intelligence_task_path(hit), :class => 'btn btn-default btn-sm' %>
+                            edit_hit_path(hit), :class => 'btn btn-default btn-sm' %>
                 <% end %>
                 <% if can? :delete, hit %>
                   <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
-                            delete_human_intelligence_task_path(hit),
+                            delete_hit_path(hit),
                             :class => 'btn btn-sm btn-danger' %>
                 <% end %>
               </td>

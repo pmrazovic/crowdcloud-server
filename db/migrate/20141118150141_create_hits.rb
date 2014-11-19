@@ -1,6 +1,6 @@
-class CreateHumanIntelligenceTasks < ActiveRecord::Migration
+class CreateHits < ActiveRecord::Migration
   def change
-    create_table :human_intelligence_tasks do |t|
+    create_table :hits do |t|
       t.references :account
       t.text       :question, :null => false
       t.text       :description

@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, hits_path %></li>
   <li class="active">HIT No. <%= @hit.id %></li>
 </ol>
 <%= render :partial => "side_navigation" %>
@@ -49,12 +49,12 @@
           </td>
         </tr>
 
-        <% if @hit.status == HumanIntelligenceTaskStatus::PUBLISHED.to_s %>
+        <% if @hit.status == HitStatus::PUBLISHED.to_s %>
           <tr>
             <th>Published at</th>
             <td><%= @hit.published_at %></td>
           </tr> 
-        <% elsif @hit.status == HumanIntelligenceTaskStatus::FINISHED.to_s %>
+        <% elsif @hit.status == HitStatus::FINISHED.to_s %>
           <tr>
             <th>Finished at</th>
             <td><%= @hit.finished_at %></td>
@@ -67,6 +67,6 @@
   </div>
   <% if can? :finish_formulation, @hit %>
     <%= link_to '<i class="fa fa-history"></i> Continue creation process'.html_safe,
-              finish_formulation_human_intelligence_task_path(@hit), :class => 'btn btn-default btn-sm' %>
+              finish_formulation_hit_path(@hit), :class => 'btn btn-default btn-sm' %>
   <% end %>
 </div>

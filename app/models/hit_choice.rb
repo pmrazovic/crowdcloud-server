@@ -1,4 +1,4 @@
 class HitChoice < ActiveRecord::Base
-  belongs_to :human_intelligence_task
+  belongs_to :hit
   validates :description, :presence => true
 end

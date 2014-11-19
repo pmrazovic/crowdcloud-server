@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :responses, :only => [:index, :show]
   end
 
-  resources :human_intelligence_tasks do
+  resources :hits do
     member do
       get 'delete'
       get 'confirm_publish'

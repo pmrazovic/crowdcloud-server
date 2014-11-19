@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
-  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
-  <li><%= link_to "HIT No. #{@hit.id}", human_intelligence_task_path(@hit) %></li>
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, hits_path %></li>
+  <li><%= link_to "HIT No. #{@hit.id}", hit_path(@hit) %></li>
   <li class="active"> Devices</li>
 </ol>
 <%= render :partial => "side_navigation" %>

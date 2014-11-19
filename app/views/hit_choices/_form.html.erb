@@ -1,7 +1,7 @@
 <%= form_for @hit_choice, :html => {:remote => true, :role => :form, :class => "form"}  do |f| %>
   <div id="error-messages">
   </div>
-  <%= f.hidden_field :human_intelligence_task_id, :value => @hit.id unless @hit.nil? %>
+  <%= f.hidden_field :hit_id, :value => @hit.id unless @hit.nil? %>
   <div class="form-group">
     <%=f.label :description %>
     <%= f.text_field :description, :class => "form-control" %>

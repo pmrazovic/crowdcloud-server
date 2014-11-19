@@ -35,7 +35,7 @@
         <% ResponseDataType.order(:name).each do |type| %>
           <tr>
             <td class="narrow-cell">
-              <%= check_box_tag("human_intelligence_task[response_data_type_ids][]", type.id, type.id.in?(@hit.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
+              <%= check_box_tag("hit[response_data_type_ids][]", type.id, type.id.in?(@hit.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
             </td>
             <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= response_data_type_icon(type.name).html_safe %></td>
             <td class="<%= type.enabled ? '' : 'text-muted' %>"><%= type.name.underscore.humanize %></td>
@@ -50,7 +50,7 @@
       <%= button_tag(:type => 'submit', :class => "btn btn-primary") do %>
         <i class="fa fa-check"></i> Save HIT
       <% end %>
-      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, human_intelligence_tasks_path, :class => 'btn btn-default' %>
+      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, hits_path, :class => 'btn btn-default' %>
     </div>
   </div>
 
