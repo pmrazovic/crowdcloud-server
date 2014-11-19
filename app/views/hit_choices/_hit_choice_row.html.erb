@@ -1,0 +1,15 @@
+<div class="row" id="hitChoice<%= hit_choice.id %>">
+  <div class="col-lg-2">
+    <div class="form-group">
+      <div class="btn-group">
+        <%= link_to '<i class="fa fa-pencil-square-o"></i>'.html_safe, edit_hit_choice_path(hit_choice), :class => "btn btn-lg btn-default", :remote => true %>
+        <%= link_to '<i class="fa fa-trash-o"></i>'.html_safe, hit_choice_path(hit_choice), :class => "btn btn-lg btn-default", :method => :delete, :remote => true %>    
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-10">
+    <blockquote>
+      <p><%= hit_choice.description %></p>
+    </blockquote>
+  </div>
+</div>

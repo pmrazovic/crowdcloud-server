@@ -37,7 +37,7 @@
           <% @sensing_tasks.each do |sensing_task| %>
             <tr>
               <td><%= link_to sensing_task.id, sensing_task_path(sensing_task) %></td>
-              <td><span class="label <%= status_label_type(sensing_task) %>"><%= sensing_task.status %></span></td>
+              <td><span class="label <%= sensing_status_label_type(sensing_task) %>"><%= sensing_task.status %></span></td>
               <td><%= sensing_task.name %></td>
               <td><%= "#{sensing_task.account.first_name} #{sensing_task.account.last_name}" %></td>
               <td><%= truncate(sensing_task.description, :length => 60) %></td>

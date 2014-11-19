@@ -1,0 +1,49 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li class="active">New human intelligence task</li>
+</ol>
+
+<%= render :partial => "creation_progress", :locals => {:step => 1} %>
+
+<div class="row" style="margin-top: 40px;">
+  <div class="col-lg-2"></div>
+  <div class="col-lg-8">
+    
+    <%= form_for @hit, :url => {:controller => 'human_intelligence_tasks', :action => 'confirm_step_1'}, :html => { :class => "form" } do |f| %>
+      <% if @hit.errors.any? %>
+        <div id="error_expl" class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title"><%= pluralize(@hit.errors.count, "error") %> prohibited this human intelligence task from being saved:</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+            <% @hit.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+            </ul>
+          </div>
+        </div>
+      <% end %>
+
+      <%= f.hidden_field :account_id, :value => current_account.id %>
+      <div class="form-group well <%= 'has-error' if @hit.errors.messages[:question] %>">
+        <%= f.label :question, 'Your question', :class => 'control-label' %>
+        <%= f.text_area :question, :rows => 5, :class => 'form-control' %>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6">
+          <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, human_intelligence_tasks_path, :class => 'btn btn-block btn-lg btn-warning' %>
+        </div>
+        <div class="col-lg-6">
+          <%= button_tag(:type => 'submit', :class => "btn btn-block btn-lg btn-primary") do %>
+            Next step <i class="fa fa-chevron-right"></i>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  
+  </div>
+
+  <div class="col-lg-2"></div>
+</div>

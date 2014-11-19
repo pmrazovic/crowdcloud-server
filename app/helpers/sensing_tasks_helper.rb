@@ -1,7 +1,7 @@
 require 'sensing_task_status'
 module SensingTasksHelper
 
-  def status_label_type(sensing_task)
+  def sensing_status_label_type(sensing_task)
     case sensing_task.status
     when SensingTaskStatus::PENDING.to_s
       "label-default"

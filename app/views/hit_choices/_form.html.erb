@@ -1,0 +1,12 @@
+<%= form_for @hit_choice, :html => {:remote => true, :role => :form, :class => "form"}  do |f| %>
+  <div id="error-messages">
+  </div>
+  <%= f.hidden_field :human_intelligence_task_id, :value => @hit.id unless @hit.nil? %>
+  <div class="form-group">
+    <%=f.label :description %>
+    <%= f.text_field :description, :class => "form-control" %>
+  </div>
+  <hr>
+  <%= button_tag('<i class="fa fa-check"></i> Save'.html_safe, :class => "btn btn-primary", :type => :submit ) %>
+  <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Cancel</button>
+<% end %>

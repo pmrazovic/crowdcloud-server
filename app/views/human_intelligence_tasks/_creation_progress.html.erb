@@ -1,8 +1,3 @@
-<ol class="breadcrumb">
-  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
-  <li class="active">New human intelligence task</li>
-</ol>
-
 <div class="row bs-wizard" style="border-bottom:0;"> 
   <div class="col-xs-3 bs-wizard-step complete">
     <div class="text-center bs-wizard-stepnum">Step 1</div>
@@ -11,26 +6,24 @@
     <div class="bs-wizard-info text-center">Formulate question</div>
   </div>
   
-  <div class="col-xs-3 bs-wizard-step disabled"><!-- complete -->
+  <div class="col-xs-3 bs-wizard-step <%= step >= 2 ? 'complete' : 'disabled' %>"><!-- complete -->
     <div class="text-center bs-wizard-stepnum">Step 2</div>
     <div class="progress"><div class="progress-bar"></div></div>
     <a href="#" class="bs-wizard-dot"></a>
     <div class="bs-wizard-info text-center">Create answer choices</div>
   </div>
   
-  <div class="col-xs-3 bs-wizard-step disabled"><!-- complete -->
+  <div class="col-xs-3 bs-wizard-step <%= step >= 3 ? 'complete' : 'disabled' %>"><!-- complete -->
     <div class="text-center bs-wizard-stepnum">Step 3</div>
     <div class="progress"><div class="progress-bar"></div></div>
     <a href="#" class="bs-wizard-dot"></a>
     <div class="bs-wizard-info text-center">Choose sensor context data</div>
   </div>
   
-  <div class="col-xs-3 bs-wizard-step disabled"><!-- active -->
+  <div class="col-xs-3 bs-wizard-step <%= step >= 4 ? 'complete' : 'disabled' %>"><!-- active -->
     <div class="text-center bs-wizard-stepnum">Step 4</div>
     <div class="progress"><div class="progress-bar"></div></div>
     <a href="#" class="bs-wizard-dot"></a>
     <div class="bs-wizard-info text-center">Provide additional information</div>
   </div>
 </div>
-
-<%= render :partial => 'form' %>

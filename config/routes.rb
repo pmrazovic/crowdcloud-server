@@ -28,8 +28,21 @@ Rails.application.routes.draw do
       get 'confirm_publish'
       get 'devices'
       post 'publish'
+      get 'step_2'
+      get 'confirm_step_2'
+      get 'step_3'
+      put 'confirm_step_3'
+      get 'step_4'
+      put 'confirm_step_4'
+      get 'finish_formulation'
+    end
+    collection do
+      get 'step_1'
+      post 'confirm_step_1'
     end
   end
+
+  resources :hit_choices
 
   root 'devices#index'
 

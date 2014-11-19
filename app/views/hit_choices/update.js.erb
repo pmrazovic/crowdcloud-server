@@ -1,0 +1,12 @@
+<% if @hit_choice.valid? %>
+  $('#createNewModal').modal('hide');
+
+  var fragment = "<%= j( render( :partial => "hit_choice_row", :locals => { :hit_choice => @hit_choice } ) ) %>";
+  var container = $("#hitChoice<%= @hit_choice.id %>");
+  container.replaceWith(fragment);
+  $("#hitChoice<%= @hit_choice.id %>").effect("pulsate", { times: 2 }, 1000);
+<% else %>
+  <% messages = @hit_choice.errors.full_messages.inject("") { |html, message| html + "<div class='alert alert-danger'><button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>#{message}</div>" } %>
+  $("#error-messages").empty();
+  $("#error-messages").append( "<%= messages.html_safe %>" )
+<% end %>

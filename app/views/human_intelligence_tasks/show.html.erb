@@ -17,7 +17,7 @@
         </tr>
         <tr>
           <th>Status</th>
-          <td><span class="label <%= status_label_type(@hit) %>"><%= @hit.status %></span></td>
+          <td><%= hit_status_label_type(@hit) %></span></td>
         </tr>
         <tr>
           <th>Crowdsourcer</th>
@@ -65,4 +65,8 @@
     </table>
 
   </div>
+  <% if can? :finish_formulation, @hit %>
+    <%= link_to '<i class="fa fa-history"></i> Continue creation process'.html_safe,
+              finish_formulation_human_intelligence_task_path(@hit), :class => 'btn btn-default btn-sm' %>
+  <% end %>
 </div>

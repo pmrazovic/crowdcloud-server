@@ -1,6 +1,8 @@
 require 'human_intelligence_task_status'
 class HumanIntelligenceTasksController < ApplicationController
-  before_action :set_hit, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices]
+  before_action :set_hit, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, 
+                                 :devices, :step_2, :confirm_step_2, :step_3, :confirm_step_3, :step_4, 
+                                 :confirm_step_4, :finish_formulation]
   # skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task]
   # load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task]
   # skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -19,6 +21,71 @@ class HumanIntelligenceTasksController < ApplicationController
   def edit
   end
 
+  # Creation steps
+
+  def step_1
+    @hit = HumanIntelligenceTask.new()
+    unless params[:existing_hit_id].blank?
+      HumanIntelligenceTask.find(params[:existing_hit_id]).destroy
+    end
+  end
+
+  def confirm_step_1
+    @hit = HumanIntelligenceTask.new(hit_params)
+    @hit.status = HumanIntelligenceTaskStatus::STEP_1.name.to_s
+    if @hit.save
+      redirect_to step_2_human_intelligence_task_path(@hit)
+    else
+      render :step_1
+    end
+  end
+
+  def step_2
+  end
+
+  def confirm_step_2
+    if @hit.status == HumanIntelligenceTaskStatus::STEP_1.name.to_s
+      @hit.status = HumanIntelligenceTaskStatus::STEP_2.name.to_s
+      @hit.save
+    end
+    redirect_to step_3_human_intelligence_task_path(@hit)
+  end
+
+  def step_3
+  end
+
+  def confirm_step_3
+    if @hit.status == HumanIntelligenceTaskStatus::STEP_2.name.to_s
+      @hit.status = HumanIntelligenceTaskStatus::STEP_3.name.to_s
+      @hit.save
+    end
+    if params[:human_intelligence_task].blank?
+      params[:human_intelligence_task] = {:response_data_type_ids => []}
+    end
+    @hit.update_attributes(hit_params)
+    redirect_to step_4_human_intelligence_task_path(@hit)
+  end
+
+  def step_4
+  end
+
+  def confirm_step_4
+    @hit.status = HumanIntelligenceTaskStatus::PENDING.name.to_s
+    @hit.save
+    @hit.update_attributes(hit_params)
+    redirect_to human_intelligence_task_path(@hit)
+  end
+
+  def finish_formulation
+    if @hit.status == HumanIntelligenceTaskStatus::STEP_1.name.to_s
+      redirect_to step_2_human_intelligence_task_path(@hit)
+    elsif @hit.status == HumanIntelligenceTaskStatus::STEP_2.name.to_s
+      redirect_to step_3_human_intelligence_task_path(@hit)
+    elsif  @hit.status == HumanIntelligenceTaskStatus::STEP_3.name.to_s
+      redirect_to step_4_human_intelligence_task_path(@hit)
+    end
+  end
+
   def create
     @hit = HumanIntelligenceTask.new(hit_params)
 
@@ -26,7 +93,7 @@ class HumanIntelligenceTasksController < ApplicationController
       if @hit.save
         format.html { redirect_to @hit, notice: 'Human intelligence task was successfully created.' }
       else
-        format.html { render :new }
+        format.html { render :new_question }
       end
     end
   end
