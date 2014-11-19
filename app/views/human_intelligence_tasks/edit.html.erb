@@ -1,0 +1,11 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li><%= link_to "HIT No. #{@hit.id}", human_intelligence_task_path(@hit) %></li>
+  <li class="active"> Edit</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <%= render :partial => 'form' %>
+</div>
+

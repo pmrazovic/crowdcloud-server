@@ -1,0 +1,20 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li><%= link_to "HIT No. #{@hit.id}", human_intelligence_task_path(@hit) %></li>
+  <li class="active"> Delete</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div class="alert-message alert-message-danger">
+    <h4>Warning</h4>
+    <p>Are you sure you want to delete this human intelligence task and corresponding responses? This action can't be undone.</p>
+    <%= form_tag human_intelligence_task_path(@hit), :method => :delete do %>
+      <div class="form-group">
+        <%= label_tag :password, t('.password') %>
+        <%= password_field_tag :password, nil, :class => "form-control input-sm", :required => true %>
+      </div>
+      <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i> Delete</button>
+    <% end %>
+  </div>
+</div>

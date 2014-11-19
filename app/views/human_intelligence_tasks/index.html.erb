@@ -1,0 +1,70 @@
+<ol class="breadcrumb">
+  <li class="active"><i class="fa fa-puzzle-piece"></i> Human intelligence tasks</li>
+</ol>
+
+<div class="row">
+
+  <div class="col-lg-12">
+
+    <% if @hits.empty? %>
+
+      <div class="alert alert-info" role="alert">
+        There are currently no human intelligence tasks created in CrowdCloud!
+      </div>
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new HIT'.html_safe,
+            new_human_intelligence_task_path,
+          :class => 'btn btn-primary' %>
+
+    <% else %>
+
+      <%= link_to '<i class="fa fa-file-text-o"></i> Create new HIT'.html_safe,
+              new_human_intelligence_task_path,
+            :class => 'btn btn-primary',
+            :style => "margin-bottom: 20px;" %>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Question</th>
+            <th>Crowdsourcer</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @hits.each do |hit| %>
+            <tr>
+              <td><%= link_to hit.id, human_intelligence_task_path(hit) %></td>
+              <td><span class="label <%= status_label_type(hit) %>"><%= hit.status %></span></td>
+              <td><%= hit.question %></td>
+              <td><%= "#{hit.account.first_name} #{hit.account.last_name}" %></td>
+              <td><%= truncate(hit.description, :length => 60) %></td>
+              <td>
+                <% if can? :show, hit %>
+                  <%= link_to '<i class="fa fa-cogs"></i> Show'.html_safe,
+                            human_intelligence_task_path(hit), :class => 'btn btn-default btn-sm' %>
+                <% end %>
+                <% if can? :edit, hit %>
+                  <%= link_to '<i class="fa fa-pencil-square-o"></i> Edit'.html_safe,
+                            edit_human_intelligence_task_path(hit), :class => 'btn btn-default btn-sm' %>
+                <% end %>
+                <% if can? :delete, hit %>
+                  <%= link_to '<i class="fa fa-trash-o"></i> Delete'.html_safe,
+                            delete_human_intelligence_task_path(hit),
+                            :class => 'btn btn-sm btn-danger' %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    <% end %>
+
+    <%= will_paginate @hits, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
+
+  </div>
+
+</div>

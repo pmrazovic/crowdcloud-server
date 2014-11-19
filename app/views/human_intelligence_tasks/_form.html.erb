@@ -1,0 +1,58 @@
+<%= form_for @hit, :html => { :class => "form-horizontal" } do |f| %>
+
+    <% if @hit.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@hit.errors.count, "error") %> prohibited this human intelligence task from being created:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @hit.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :account_id, :value => current_account.id %>
+  <div class="form-group <%= 'has-error' if @hit.errors.messages[:question] %>">
+    <%= f.label :question, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :question, :rows => 5, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group <%= 'has-error' if @hit.errors.messages[:description] %>">
+    <%= f.label :description, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_area :description, :rows => 5, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :response_data_types, "Context data", :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <table class="table table-bordered white-background">
+        <% ResponseDataType.order(:name).each do |type| %>
+          <tr>
+            <td class="narrow-cell">
+              <%= check_box_tag("human_intelligence_task[response_data_type_ids][]", type.id, type.id.in?(@hit.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
+            </td>
+            <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= response_data_type_icon(type.name).html_safe %></td>
+            <td class="<%= type.enabled ? '' : 'text-muted' %>"><%= type.name.underscore.humanize %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <%= button_tag(:type => 'submit', :class => "btn btn-primary") do %>
+        <i class="fa fa-check"></i> Save HIT
+      <% end %>
+      <%= link_to '<i class="fa fa-times"></i> Cancel'.html_safe, human_intelligence_tasks_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+
+<% end %>

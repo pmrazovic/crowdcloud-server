@@ -27,6 +27,9 @@
             </li>
             <li class="<%= 'active' if controller.controller_name == "sensing_tasks" || controller.controller_name == "responses" %>">
               <%= link_to "<i class=\"fa fa-rss\"></i> Sensing tasks".html_safe, sensing_tasks_path %>
+            </li>
+            <li class="<%= 'active' if controller.controller_name == "human_intelligence_tasks" %>">
+              <%= link_to "<i class=\"fa fa-puzzle-piece\"></i> Human intelligence tasks".html_safe, human_intelligence_tasks_path %>
             </li>            
             <li class="<%= 'active' if controller.controller_name == "social_networks" %>">
               <%= link_to "<i class=\"fa fa-group\"></i> Social Networks".html_safe, "#" %>

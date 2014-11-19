@@ -1,0 +1,17 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-puzzle-piece"></i> Human intelligence tasks'.html_safe, human_intelligence_tasks_path %></li>
+  <li><%= link_to "HIT No. #{@hit.id}", human_intelligence_task_path(@hit) %></li>
+  <li class="active"> Devices</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div class="alert alert-info" role="alert">
+    <h4>
+      <i class="fa fa-exclamation-triangle"></i> Information
+    </h4>
+    <p>
+      Page is under development!
+    </p>
+  </div>
+</div>
