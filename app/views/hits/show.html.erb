@@ -9,11 +9,20 @@
     <div class="panel-heading">
       <h4 class="panel-title">Basic information</h4>
     </div>
-    <table class="table table-bordered small">
+    <table class="table table-bordered">
       <tbody>
         <tr>
           <th>Question</th>
-          <td><%= @hit.question %></td>
+          <td>
+            <p class="text-muted">
+              <b><i><%= @hit.question %></i></b>
+              <ol>
+                <% @hit.hit_choices.order("id ASC").each do |hit_choice| %>
+                  <li><i><%= hit_choice.description %></i></li>
+                <% end %>
+              </ol>
+            </p>
+          </td>
         </tr>
         <tr>
           <th>Status</th>
