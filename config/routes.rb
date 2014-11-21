@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get 'step_4'
       put 'confirm_step_4'
       get 'finish_formulation'
+      get 'manage_hit_choices'
     end
     collection do
       get 'step_1'
@@ -50,6 +51,8 @@ Rails.application.routes.draw do
 
   get  'api/sensing_tasks' => 'sensing_tasks#list_sensing_tasks'
   get  'api/sensing_tasks/:id' => 'sensing_tasks#get_sensing_task'
+  get  'api/hits' => 'hits#list_hits'
+  get  'api/hits/:id' => 'hits#get_hit'
   post 'api/responses' => 'responses#create'
   post 'api/devices/register' => 'devices#register'
 

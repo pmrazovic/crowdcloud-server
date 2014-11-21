@@ -5,6 +5,9 @@
   <% if can? :edit, @hit %>
     <%= link_to "<i class=\"fa fa-pencil-square-o\"></i> Edit".html_safe, edit_hit_path(@hit), :class => "list-group-item #{'active' if controller.action_name == "edit"}" %>
   <% end %>
+  <% if can? :manage_hit_choices, @hit %>
+    <%= link_to "<i class=\"fa fa-bars\"></i> Manage answer choices".html_safe, manage_hit_choices_hit_path(@hit), :class => "list-group-item #{'active' if controller.action_name == "manage_hit_choices"}" %>
+  <% end %>
   <% if can? :confirm_publish, @hit %>
     <%= link_to "<i class=\"fa fa-bell\"></i> Publish".html_safe, confirm_publish_hit_path(@hit), :class => "list-group-item #{'active' if controller.action_name == "confirm_publish"}" %> 
   <% end %>

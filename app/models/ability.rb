@@ -21,7 +21,7 @@ class Ability
     can [:index, :show, :new, :create, :devices], SensingTask
     can [:edit, :update, :delete, :destroy, :publish, :confirm_publish], SensingTask, :account_id => @account.id
     can [:index, :show, :new, :create, :devices], Hit
-    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish, :finish_formulation], Hit, :account_id => @account.id
+    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish, :finish_formulation, :manage_hit_choices], Hit, :account_id => @account.id
     can [:index, :show], Response
     hit_creation_step
   end
@@ -44,7 +44,7 @@ class Ability
                                                                          HitStatus::CLOSED.name.to_s,
                                                                          HitStatus::STEP_1.name.to_s,
                                                                          HitStatus::STEP_2.name.to_s]
-    cannot [:edit, :update, :devices, :destroy, :publish, :confirm_publish], Hit, :status => [ HitStatus::STEP_1.name.to_s, 
+    cannot [:edit, :update, :devices, :destroy, :publish, :confirm_publish, :manage_hit_choices], Hit, :status => [ HitStatus::STEP_1.name.to_s, 
                                                                                                                                  HitStatus::STEP_2.name.to_s,
                                                                                                                                  HitStatus::STEP_3.name.to_s]
   end
