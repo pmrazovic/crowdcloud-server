@@ -165,7 +165,7 @@ class HitsController < ApplicationController
                                       :published_at => oc.published_at,
                                       :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                                       :crowdsourcer_email => oc.account.email,
-                                      :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "Hit", :device_id => params[:device_id]) }
+                                      :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
                                     }
     render :json => hits.to_json
   end
@@ -181,7 +181,7 @@ class HitsController < ApplicationController
             :context_data_types => oc.response_data_types.collect { |t| t.name },
             :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
             :crowdsourcer_email => oc.account.email,
-            :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "Hit", :device_id => params[:device_id]) }
+            :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
 
     puts params.inspect
     render :json => hit.to_json

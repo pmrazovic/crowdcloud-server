@@ -1,4 +1,4 @@
-class SensingResponsesController < ApplicationController
+class HitResponsesController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:create], :if => Proc.new { |c| c.request.format == 'application/json' }
   skip_before_filter :authenticate_account!, :only => [:create]
   load_and_authorize_resource :except => [:create]
@@ -6,10 +6,14 @@ class SensingResponsesController < ApplicationController
   def create
     status = :ok
     begin
+      hit_response = HitResponse.create!(:hit_id => params[:task_id],
+                                         :device => Device.where(:uuid => params[:device][:uuid]).first,
+                                         :hit_choice_id => params[:choice_id])
+
       unless params[:sensing_response_items].blank?
-        sensing_response = SensingResponse.create!(:task_id => params[:task_id],
-                                                   :task_type => params[:task_type],
-                                                   :device => Device.where(:uuid => params[:device][:uuid]).first)
+        sensing_response = SensingResponse.create!(:task_id => hit_response.id,
+                                                   :task_type => "HitResponse",
+                                                   :device => hit_response.device)
 
         params[:sensing_response_items].each do |item|
           new_response_data = item.keys.first.constantize.create!(item.values.first)

@@ -5,4 +5,5 @@ class Hit < ActiveRecord::Base
   has_many :responses, :as => :task, :dependent => :destroy
   has_many :response_items, :through => :responses
   has_many :hit_choices, :dependent => :destroy
+  has_many :hit_responses, :dependent => :destroy
 end
