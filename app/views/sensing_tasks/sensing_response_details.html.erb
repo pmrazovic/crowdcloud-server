@@ -1,10 +1,10 @@
 <ol class="breadcrumb">
   <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
   <li><%= link_to @sensing_task.name, sensing_task_path(@sensing_task) %></li>
-  <li><%= link_to "Sensing responses", sensing_task_sensing_responses_path(@sensing_task) %></li>
-  <li class="active"><%= @sensing_response.created_at %></li>
+  <li><%= link_to 'Sensing responses', sensing_responses_sensing_task_path(@sensing_task) %></li>
+  <li class="active"> Sensing response <%= @sensing_response.id %></li>
 </ol>
-<%= render :partial => "sensing_tasks/side_navigation" %>
+<%= render :partial => "side_navigation" %>
 
 <div class="col-lg-9">
   <% @sensing_response.sensing_response_items.each do |response_item| %>
@@ -19,3 +19,4 @@
     <% end %>
   <% end %>
 </div>
+

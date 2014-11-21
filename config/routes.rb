@@ -18,9 +18,12 @@ Rails.application.routes.draw do
       get 'confirm_publish'
       get 'devices'
       post 'publish'
+      get 'sensing_responses'
+      get 'sensing_response_details'
     end
-    resources :sensing_responses, :only => [:index, :show]
   end
+
+  resources :sensing_responses, :only => [:show]
 
   resources :hits do
     member do

@@ -1,9 +1,9 @@
 <ol class="breadcrumb">
-  <li><%= link_to "Open calls", sensing_tasks_path %></li>
+  <li><%= link_to "Sensing tasks", sensing_tasks_path %></li>
   <li><%= link_to @sensing_task.name, sensing_task_path(@sensing_task) %></li>
-  <li class="active"> Responses</li>
+  <li class="active"> Sensing responses</li>
 </ol>
-<%= render :partial => "sensing_tasks/side_navigation" %>
+<%= render :partial => "side_navigation" %>
 
 <div class="col-lg-9">
   <% if @sensing_responses.empty? %>
@@ -32,7 +32,7 @@
                 <span style="margin-right: 5px;"><%= response_data_type_icon(type).html_safe %></span>
               <% end %>
             </td>
-            <td><%= link_to '<i class="fa fa-search"></i> More details'.html_safe, [@sensing_task, response], 'data-no-turbolink' => true, :class => "btn btn-primary btn-sm" %></td>
+            <td><%= link_to '<i class="fa fa-search"></i> More details'.html_safe, sensing_response_details_sensing_task_path(@sensing_task, :sensing_response_id => response.id), 'data-no-turbolink' => true, :class => "btn btn-primary btn-sm" %></td>
           </tr>
         <% end %>
       </tbody>
@@ -40,3 +40,4 @@
   <% end %>
   <%= will_paginate @sensing_responses, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
 </div>
+

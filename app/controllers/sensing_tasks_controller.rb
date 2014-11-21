@@ -1,6 +1,7 @@
 require 'sensing_task_status'
 class SensingTasksController < ApplicationController
-  before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices]
+  before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices, 
+                                          :sensing_responses, :sensing_response_details]
   skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task]
   load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task]
   skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -88,6 +89,14 @@ class SensingTasksController < ApplicationController
   end
 
   def devices
+  end
+
+  def sensing_responses
+    @sensing_responses = @sensing_task.sensing_responses.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
+  end
+
+  def sensing_response_details
+    @sensing_response = SensingResponse.find(params[:sensing_response_id])
   end
 
   # Sensing task Api -------------------
