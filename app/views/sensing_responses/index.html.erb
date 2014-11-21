@@ -6,7 +6,7 @@
 <%= render :partial => "sensing_tasks/side_navigation" %>
 
 <div class="col-lg-9">
-  <% if @responses.empty? %>
+  <% if @sensing_responses.empty? %>
     <div class="alert alert-info" role="alert">
       There are currently no responses for this open call!
     </div>
@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @responses.each do |response| %>
+        <% @sensing_responses.each do |response| %>
           <tr>
             <td><%= response.id %></td>
             <td><%= link_to response.device.uuid, response.device %></td>
@@ -38,5 +38,5 @@
       </tbody>
     </table>
   <% end %>
-  <%= will_paginate @responses, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
+  <%= will_paginate @sensing_responses, :previous_label => 'Previous', :next_label => 'Next', :renderer => BootstrapPagination::Rails %>
 </div>

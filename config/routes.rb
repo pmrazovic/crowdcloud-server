@@ -5,8 +5,8 @@ Rails.application.routes.draw do
     member do
       get 'unregister'
       get 'sensors'
-      get 'responses'
       get 'statistics'
+      get 'responses'
       get 'compose_message'
       post 'push_message'
     end
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       get 'devices'
       post 'publish'
     end
-    resources :responses, :only => [:index, :show]
+    resources :sensing_responses, :only => [:index, :show]
   end
 
   resources :hits do
@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   get  'api/sensing_tasks/:id' => 'sensing_tasks#get_sensing_task'
   get  'api/hits' => 'hits#list_hits'
   get  'api/hits/:id' => 'hits#get_hit'
-  post 'api/responses' => 'responses#create'
+  post 'api/responses' => 'sensing_responses#create'
   post 'api/devices/register' => 'devices#register'
 
 

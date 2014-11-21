@@ -11,8 +11,8 @@
   <% if can? :devices, @sensing_task %>
     <%= link_to "<i class=\"fa fa-desktop\"></i> Devices".html_safe, devices_sensing_task_path(@sensing_task), :class => "list-group-item #{'active' if controller.action_name == "devices"}" %>
   <% end %>
-  <% if can? :index, Response %>
-    <%= link_to "<i class=\"fa fa-cloud-download\"></i> Responses".html_safe, sensing_task_responses_path(@sensing_task), :class => "list-group-item #{'active' if controller.controller_name == "responses"}" %>  
+  <% if can? :index, SensingResponse %>
+    <%= link_to "<i class=\"fa fa-cloud-download\"></i> Sensing responses".html_safe, sensing_task_sensing_responses_path(@sensing_task), :class => "list-group-item #{'active' if controller.controller_name == "sensing_responses"}" %>  
   <% end %>
   <% if can? :delete, @sensing_task %>
     <%= link_to "<i class=\"fa fa-trash-o\"></i> Delete".html_safe, delete_sensing_task_path(@sensing_task), :class => "list-group-item #{'active' if controller.action_name == "delete"}" %>

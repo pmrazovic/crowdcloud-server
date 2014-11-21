@@ -1,6 +1,6 @@
 require 'sensing_task_status'
 class SensingTasksController < ApplicationController
-  before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :responses, :devices]
+  before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices]
   skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task]
   load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task]
   skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -101,7 +101,7 @@ class SensingTasksController < ApplicationController
                                           :published_at => oc.published_at,
                                           :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                                           :crowdsourcer_email => oc.account.email,
-                                          :responded => Response.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
+                                          :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
                                   }
     render :json => sensing_tasks.to_json
   end
@@ -116,7 +116,7 @@ class SensingTasksController < ApplicationController
                   :response_data_types => oc.response_data_types.collect{ |t| t.name },
                   :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                   :crowdsourcer_email => oc.account.email,
-                  :responded => Response.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
+                  :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
 
     puts params.inspect
     render :json => sensing_task.to_json
