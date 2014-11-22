@@ -11,8 +11,8 @@ class HitResponsesController < ApplicationController
                                          :hit_choice_id => params[:choice_id])
 
       unless params[:sensing_response_items].blank?
-        sensing_response = SensingResponse.create!(:task_id => hit_response.id,
-                                                   :task_type => "HitResponse",
+        sensing_response = SensingResponse.create!(:sensable_id => hit_response.id,
+                                                   :sensable_type => "HitResponse",
                                                    :device => hit_response.device)
 
         params[:sensing_response_items].each do |item|

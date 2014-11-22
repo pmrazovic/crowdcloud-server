@@ -7,8 +7,8 @@ class SensingResponsesController < ApplicationController
     status = :ok
     begin
       unless params[:sensing_response_items].blank?
-        sensing_response = SensingResponse.create!(:task_id => params[:task_id],
-                                                   :task_type => params[:task_type],
+        sensing_response = SensingResponse.create!(:sensable_id => params[:task_id],
+                                                   :sensable_type => "SensingTask",
                                                    :device => Device.where(:uuid => params[:device][:uuid]).first)
 
         params[:sensing_response_items].each do |item|

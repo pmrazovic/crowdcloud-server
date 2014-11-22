@@ -106,7 +106,7 @@ class SensingTasksController < ApplicationController
                                           :published_at => oc.published_at,
                                           :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                                           :crowdsourcer_email => oc.account.email,
-                                          :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
+                                          :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
                                   }
     render :json => sensing_tasks.to_json
   end
@@ -121,7 +121,7 @@ class SensingTasksController < ApplicationController
                   :response_data_types => oc.response_data_types.collect{ |t| t.name },
                   :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                   :crowdsourcer_email => oc.account.email,
-                  :responded => SensingResponse.exists?(:task_id => oc.id, :task_type => "SensingTask", :device_id => params[:device_id]) }
+                  :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
 
     puts params.inspect
     render :json => sensing_task.to_json
