@@ -63,7 +63,7 @@ class HitsController < ApplicationController
       @hit.save
     end
     if params[:hit].blank?
-      params[:hit] = {:response_data_type_ids => []}
+      params[:hit] = {:sensing_data_type_ids => []}
     end
     @hit.update_attributes(hit_params)
     redirect_to step_4_hit_path(@hit)
@@ -103,8 +103,8 @@ class HitsController < ApplicationController
 
   def update
     respond_to do |format|
-      unless params[:hit].has_key?(:response_data_type_ids)
-        params[:hit][:response_data_type_ids] = []
+      unless params[:hit].has_key?(:sensing_data_type_ids)
+        params[:hit][:sensing_data_type_ids] = []
       end
       if @hit.update(hit_params)
         format.html { redirect_to @hit, notice: 'Human intelligence task was successfully updated.' }
@@ -182,7 +182,7 @@ class HitsController < ApplicationController
             :created_at => oc.created_at,
             :published_at => oc.published_at,
             :choices => oc.hit_choices.order("id ASC").collect { |c| {:id => c.id, :description => c.description} },
-            :context_data_types => oc.response_data_types.collect { |t| t.name },
+            :context_data_types => oc.sensing_data_types.collect { |t| t.name },
             :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
             :crowdsourcer_email => oc.account.email,
             :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
@@ -197,6 +197,6 @@ class HitsController < ApplicationController
     end
 
     def hit_params
-      params.require(:hit).permit(:account_id, :question, :description, :response_data_type_ids => [])
+      params.require(:hit).permit(:account_id, :question, :description, :sensing_data_type_ids => [])
     end
 end

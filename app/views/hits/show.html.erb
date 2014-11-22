@@ -48,9 +48,9 @@
           <th style="width: 180px;">Response data types</th>
           <td>
             <table class="table table-bordered" style="width: 300px;">
-              <% @hit.response_data_types.order(:name).each do |type| %>
+              <% @hit.sensing_data_types.order(:name).each do |type| %>
                 <tr>
-                  <td class="narrow-cell"><%= response_data_type_icon(type.name).html_safe %></td>
+                  <td class="narrow-cell"><%= sensing_data_type_icon(type.name).html_safe %></td>
                   <td><%= type.name.underscore.humanize %></td>
                 </tr>
               <% end %>

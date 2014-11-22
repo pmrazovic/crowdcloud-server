@@ -34,8 +34,8 @@ class SensingTasksController < ApplicationController
 
   def update
     respond_to do |format|
-      unless params[:sensing_task].has_key?(:response_data_type_ids)
-        params[:sensing_task][:response_data_type_ids] = []
+      unless params[:sensing_task].has_key?(:sensing_data_type_ids)
+        params[:sensing_task][:sensing_data_type_ids] = []
       end
       if @sensing_task.update(sensing_task_params)
         format.html { redirect_to @sensing_task, notice: 'Sensing task was successfully updated.' }
@@ -118,7 +118,7 @@ class SensingTasksController < ApplicationController
                   :description => oc.description,
                   :created_at => oc.created_at,
                   :published_at => oc.published_at,
-                  :response_data_types => oc.response_data_types.collect{ |t| t.name },
+                  :sensing_data_types => oc.sensing_data_types.collect{ |t| t.name },
                   :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
                   :crowdsourcer_email => oc.account.email,
                   :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
@@ -133,6 +133,6 @@ class SensingTasksController < ApplicationController
     end
 
     def sensing_task_params
-      params.require(:sensing_task).permit(:account_id, :name, :description, :response_data_type_ids => [])
+      params.require(:sensing_task).permit(:account_id, :name, :description, :sensing_data_type_ids => [])
     end
 end

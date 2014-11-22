@@ -29,7 +29,7 @@
             <td><%= response.created_at %></td>
             <td>
               <% response.responded_data_types.each do |type| %>
-                <span style="margin-right: 5px;"><%= response_data_type_icon(type).html_safe %></span>
+                <span style="margin-right: 5px;"><%= sensing_data_type_icon(type).html_safe %></span>
               <% end %>
             </td>
             <td><%= link_to '<i class="fa fa-search"></i> More details'.html_safe, sensing_response_details_sensing_task_path(@sensing_task, :sensing_response_id => response.id), 'data-no-turbolink' => true, :class => "btn btn-primary btn-sm" %></td>

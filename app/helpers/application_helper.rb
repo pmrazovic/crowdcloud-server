@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def response_data_type_icon(response_data_type_name)
-    case response_data_type_name
+  def sensing_data_type_icon(sensing_data_type_name)
+    case sensing_data_type_name
     when "GeoLocationData"
       '<i class="fa fa-globe"></i>'
     when "AcousticsData"

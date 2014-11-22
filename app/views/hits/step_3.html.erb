@@ -26,15 +26,15 @@
       <% end %>
 
       <div class="form-group">
-        <%= f.label :response_data_types, "Context data", :class => 'control-label col-lg-2' %>
+        <%= f.label :sensing_data_types, "Context data", :class => 'control-label col-lg-2' %>
         <div class="col-lg-10">
           <table class="table table-bordered white-background">
-            <% ResponseDataType.order(:name).each do |type| %>
+            <% SensingDataType.order(:name).each do |type| %>
               <tr>
                 <td class="narrow-cell">
-                  <%= check_box_tag("hit[response_data_type_ids][]", type.id, type.id.in?(@hit.response_data_types.collect(&:id)), :disabled => !type.enabled) %> 
+                  <%= check_box_tag("hit[sensing_data_type_ids][]", type.id, type.id.in?(@hit.sensing_data_types.collect(&:id)), :disabled => !type.enabled) %> 
                 </td>
-                <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= response_data_type_icon(type.name).html_safe %></td>
+                <td class="narrow-cell <%= type.enabled ? '' : 'text-muted' %>"><%= sensing_data_type_icon(type.name).html_safe %></td>
                 <td class="<%= type.enabled ? '' : 'text-muted' %>"><%= type.name.underscore.humanize %></td>
               </tr>
             <% end %>
