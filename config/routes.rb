@@ -39,6 +39,7 @@ Rails.application.routes.draw do
       put 'confirm_step_4'
       get 'finish_formulation'
       get 'manage_hit_choices'
+      get 'responses'
     end
     collection do
       get 'step_1'

@@ -76,11 +76,7 @@ class SensingTasksController < ApplicationController
     options = {:data => { :title => "Sensing task: #{@sensing_task.name}", 
                           :message => "New sensing task has been published",
                           :task => { :id => @sensing_task.id,
-                                     :type => "SensingTask",
-                                     :name => @sensing_task.name,
-                                     :description => @sensing_task.description,
-                                     :published_at => @sensing_task.published_at,
-                                     :response_data_types => @sensing_task.response_data_types.collect{ |type| type.name } } }}
+                                     :type => "SensingTask" }}}
 
     gcm_response = GCM.send(push_ids, options)
     respond_to do |format|

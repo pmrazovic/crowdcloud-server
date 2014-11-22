@@ -2,7 +2,7 @@ require 'hit_status'
 class HitsController < ApplicationController
   before_action :set_hit, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, 
                                  :devices, :step_2, :confirm_step_2, :step_3, :confirm_step_3, :step_4, 
-                                 :confirm_step_4, :finish_formulation, :manage_hit_choices]
+                                 :confirm_step_4, :finish_formulation, :manage_hit_choices, :responses]
   skip_before_filter :authenticate_account!, :only => [:list_hits, :get_hit]
   load_and_authorize_resource :except => [:list_hits, :get_hit]
   skip_before_filter :verify_authenticity_token, :only => [:list_hits], :if => Proc.new { |c| c.request.format == 'application/json' }
@@ -152,6 +152,10 @@ class HitsController < ApplicationController
   end
 
   def devices
+  end
+
+  def responses
+    @hit_responses = @hit.hit_responses
   end
 
   # HIT Api -------------------
