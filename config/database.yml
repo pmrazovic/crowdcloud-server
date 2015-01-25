@@ -1,13 +1,13 @@
 development:
   adapter: postgresql
-  database: crowdcloud-development
-  username: crowdcloud
-  password: crowdcloud
+  database: mobics-development
+  username: mobics
+  password: mobics
   host: localhost
   encoding: utf8
 
 production:
-  adapter: postgresql
-  database: crowdcloud
+  adapter: mobics
+  database: mobics
   encoding: utf8
   pool: 5
