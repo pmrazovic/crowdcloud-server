@@ -39,7 +39,11 @@
               <td><%= link_to sensing_task.id, sensing_task_path(sensing_task) %></td>
               <td><span class="label <%= sensing_status_label_type(sensing_task) %>"><%= sensing_task.status %></span></td>
               <td><%= sensing_task.name %></td>
-              <td><%= "#{sensing_task.account.first_name} #{sensing_task.account.last_name}" %></td>
+              <% if sensing_task.crowdsourcer_type == 'Account' %>
+                <td><%= "#{sensing_task.crowdsourcer.first_name} #{sensing_task.crowdsourcer.last_name}" %></td>
+              <% elsif sensing_task.crowdsourcer_type == 'Device' %>
+                <td><%= sensing_task.crowdsourcer.uuid %></td>
+              <% end %>
               <td><%= truncate(sensing_task.description, :length => 60) %></td>
               <td>
                 <% if can? :show, sensing_task %>

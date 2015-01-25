@@ -19,9 +19,9 @@ class Ability
     can :manage, Account, :account_id => @account.id
     can [:index, :show, :sensors, :responses, :statistics], Device
     can [:index, :show, :new, :create, :devices], SensingTask
-    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish], SensingTask, :account_id => @account.id
+    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish], SensingTask, :crowdsourcer_id => @account.id, :crowdsourcer_type => 'Account'
     can [:index, :show, :new, :create, :devices], Hit
-    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish, :finish_formulation, :manage_hit_choices], Hit, :account_id => @account.id
+    can [:edit, :update, :delete, :destroy, :publish, :confirm_publish, :finish_formulation, :manage_hit_choices], Hit, :crowdsourcer_id => @account.id, :crowdsourcer_type => 'Account'
     can [:index, :show], Response
     hit_creation_step
   end

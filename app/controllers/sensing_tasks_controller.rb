@@ -104,8 +104,8 @@ class SensingTasksController < ApplicationController
                          .collect{ |oc| { :id => oc.id, 
                                           :name => oc.name,
                                           :published_at => oc.published_at,
-                                          :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
-                                          :crowdsourcer_email => oc.account.email,
+                                          :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                                          :crowdsourcer_type => oc.crowdsourcer_type,
                                           :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
                                   }
     render :json => sensing_tasks.to_json
@@ -119,8 +119,8 @@ class SensingTasksController < ApplicationController
                   :created_at => oc.created_at,
                   :published_at => oc.published_at,
                   :sensing_data_types => oc.sensing_data_types.collect{ |t| t.name },
-                  :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
-                  :crowdsourcer_email => oc.account.email,
+                  :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                  :crowdsourcer_type => oc.crowdsourcer_type,
                   :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
 
     puts params.inspect
@@ -133,6 +133,6 @@ class SensingTasksController < ApplicationController
     end
 
     def sensing_task_params
-      params.require(:sensing_task).permit(:account_id, :name, :description, :sensing_data_type_ids => [])
+      params.require(:sensing_task).permit(:crowdsourcer_id, :crowdsourcer_type, :name, :description, :sensing_data_type_ids => [])
     end
 end

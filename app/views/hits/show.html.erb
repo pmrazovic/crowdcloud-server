@@ -30,7 +30,11 @@
         </tr>
         <tr>
           <th>Crowdsourcer</th>
-          <td><%= @hit.account.email %></td>
+          <% if @hit.crowdsourcer_type == 'Account' %>
+            <td><%= @hit.crowdsourcer.email %></td>
+          <% elsif @hit.crowdsourcer_type == 'Device' %>
+            <td><%= @hit.crowdsourcer.uuid %></td>
+          <% end %>
         </tr>
         <tr>
           <th>Description</th>

@@ -15,7 +15,8 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :account_id, :value => current_account.id %>
+  <%= f.hidden_field :crowdsourcer_id, :value => current_account.id %>
+  <%= f.hidden_field :crowdsourcer_type, :value => "Account" %>
   <div class="form-group <%= 'has-error' if @hit.errors.messages[:question] %>">
     <%= f.label :question, :class => 'control-label col-lg-2' %>
     <div class="col-lg-10">

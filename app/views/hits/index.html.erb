@@ -39,7 +39,11 @@
               <td><%= link_to hit.id, hit_path(hit) %></td>
               <td><%= hit_status_label_type(hit) %></span></td>
               <td><%= hit.question %></td>
-              <td><%= "#{hit.account.first_name} #{hit.account.last_name}" %></td>
+              <% if hit.crowdsourcer_type == 'Account' %>
+                <td><%= "#{hit.crowdsourcer.first_name} #{hit.crowdsourcer.last_name}" %></td>
+              <% elsif hit.crowdsourcer_type == 'Device' %>
+                <td><%= hit.crowdsourcer.uuid %></td>
+              <% end %>
               <td><%= truncate(hit.description, :length => 60) %></td>
               <td>
                 <% if can? :finish_formulation, hit %>

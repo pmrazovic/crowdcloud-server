@@ -21,7 +21,11 @@
         </tr>
         <tr>
           <th>Crowdsourcer</th>
-          <td><%= @sensing_task.account.email %></td>
+          <% if @sensing_task.crowdsourcer_type == 'Account' %>
+            <td><%= @sensing_task.crowdsourcer.email %></td>
+          <% elsif @sensing_task.crowdsourcer_type == 'Device' %>
+            <td><%= @sensing_task.crowdsourcer.uuid %></td>
+          <% end %>
         </tr>
         <tr>
           <th>Description</th>

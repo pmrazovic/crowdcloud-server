@@ -167,8 +167,8 @@ class HitsController < ApplicationController
                      .collect{ |oc| { :id => oc.id, 
                                       :question => oc.question,
                                       :published_at => oc.published_at,
-                                      :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
-                                      :crowdsourcer_email => oc.account.email,
+                                      :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                                      :crowdsourcer_type => oc.crowdsourcer_type,
                                       :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
                                     }
     render :json => hits.to_json
@@ -183,8 +183,8 @@ class HitsController < ApplicationController
             :published_at => oc.published_at,
             :choices => oc.hit_choices.order("id ASC").collect { |c| {:id => c.id, :description => c.description} },
             :context_data_types => oc.sensing_data_types.collect { |t| t.name },
-            :crowdsourcer_name => "#{oc.account.first_name} #{oc.account.last_name}",
-            :crowdsourcer_email => oc.account.email,
+            :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+            :crowdsourcer_type => oc.crowdsourcer_type,
             :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
 
     puts params.inspect
@@ -197,6 +197,6 @@ class HitsController < ApplicationController
     end
 
     def hit_params
-      params.require(:hit).permit(:account_id, :question, :description, :sensing_data_type_ids => [])
+      params.require(:hit).permit(:crowdsourcer_id, :crowdsourcer_type, :question, :description, :sensing_data_type_ids => [])
     end
 end
