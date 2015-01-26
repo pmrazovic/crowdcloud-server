@@ -124,6 +124,7 @@ class SensingTasksController < ApplicationController
     sensing_task_responses = @sensing_task.sensing_responses
                                           .joins(:device)
                                           .order(:created_at)
+                                          .paginate(:page => params[:page], :per_page => 20)
                                           .select("sensing_responses.id, sensing_responses.created_at, devices.uuid")
                                           .collect{ |r| { :id => r.id,
                                                           :created_at => r.created_at,
