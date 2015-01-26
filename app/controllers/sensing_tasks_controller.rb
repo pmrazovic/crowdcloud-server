@@ -1,9 +1,9 @@
 require 'sensing_task_status'
 class SensingTasksController < ApplicationController
   before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices, 
-                                          :sensing_responses, :sensing_response_details]
-  skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new]
-  load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new]
+                                          :sensing_responses, :sensing_response_details, :get_responses]
+  skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses]
+  load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses]
   skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
@@ -118,6 +118,17 @@ class SensingTasksController < ApplicationController
                   :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
 
     render :json => sensing_task.to_json
+  end
+
+  def get_responses
+    sensing_task_responses = @sensing_task.sensing_responses
+                                          .joins(:device)
+                                          .order(:created_at)
+                                          .select("sensing_responses.id, sensing_responses.created_at, devices.uuid")
+                                          .collect{ |r| { :id => r.id,
+                                                          :created_at => r.created_at,
+                                                          :device_uuid => r.uuid } }
+    render :json => sensing_task_responses.to_json
   end
 
   def fetch_sensing_data_types
