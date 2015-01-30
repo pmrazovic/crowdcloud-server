@@ -2,8 +2,8 @@ require 'sensing_task_status'
 class SensingTasksController < ApplicationController
   before_action :set_sensing_task, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, :devices, 
                                           :sensing_responses, :sensing_response_details, :get_responses]
-  skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses]
-  load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses]
+  skip_before_filter :authenticate_account!, :only => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses, :get_response]
+  load_and_authorize_resource :except => [:list_sensing_tasks, :get_sensing_task, :fetch_sensing_data_types, :publish_new, :get_responses, :get_response]
   skip_before_filter :verify_authenticity_token, :only => [:list_sensing_tasks], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
@@ -92,6 +92,8 @@ class SensingTasksController < ApplicationController
   # Sensing task Api -------------------
 
   def list_sensing_tasks
+    status = :ok
+    begin
     sensing_tasks = SensingTask.where(:status => SensingTaskStatus::PUBLISHED.to_s)
                          .order("created_at DESC")
                          .paginate(:page => params[:page], :per_page => 20)
@@ -102,39 +104,89 @@ class SensingTasksController < ApplicationController
                                           :crowdsourcer_type => oc.crowdsourcer_type,
                                           :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
                                   }
-    render :json => sensing_tasks.to_json
+    rescue Exception => e
+      status = :internal_server_error
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+    end
+    render :json => (status == :ok ? sensing_tasks.to_json : ''), :status => status
   end
 
   def get_sensing_task
+    status = :ok
     oc = SensingTask.find(params[:id])
-    sensing_task = { :id => oc.id, 
-                  :name => oc.name,
-                  :description => oc.description,
-                  :created_at => oc.created_at,
-                  :published_at => oc.published_at,
-                  :sensing_data_types => oc.sensing_data_types.collect{ |t| t.name },
-                  :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
-                  :crowdsourcer_type => oc.crowdsourcer_type,
-                  :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
-
-    render :json => sensing_task.to_json
+    if oc.nil?
+      status = :bad_request
+    else
+      begin
+        sensing_task = { :id => oc.id, 
+                         :name => oc.name,
+                         :description => oc.description,
+                         :created_at => oc.created_at,
+                         :published_at => oc.published_at,
+                         :sensing_data_types => oc.sensing_data_types.collect{ |t| t.name },
+                         :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                         :crowdsourcer_type => oc.crowdsourcer_type,
+                         :responded => SensingResponse.exists?(:sensable_id => oc.id, :sensable_type => "SensingTask", :device_id => params[:device_id]) }
+      rescue Exception => e
+        status = :internal_server_error
+        Rails.logger.error(e.message)
+        Rails.logger.error(e.backtrace.join("\n"))
+      end                         
+    end
+    render :json => (status == :ok ? sensing_task.to_json : ''), :status => status
   end
 
   def get_responses
-    sensing_task_responses = @sensing_task.sensing_responses
-                                          .joins(:device)
-                                          .order(:created_at)
-                                          .paginate(:page => params[:page], :per_page => 20)
-                                          .select("sensing_responses.id, sensing_responses.created_at, devices.uuid")
-                                          .collect{ |r| { :id => r.id,
-                                                          :created_at => r.created_at,
-                                                          :device_uuid => r.uuid } }
-    render :json => sensing_task_responses.to_json
+    status = :ok
+    begin
+      sensing_task_responses = @sensing_task.sensing_responses
+                                            .joins(:device)
+                                            .order(:created_at)
+                                            .paginate(:page => params[:page], :per_page => 20)
+                                            .select("sensing_responses.id, sensing_responses.created_at, devices.uuid")
+                                            .collect{ |r| { :id => r.id,
+                                                            :created_at => r.created_at,
+                                                            :device_uuid => r.uuid } }
+    rescue Exception => e
+      status = :internal_server_error
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+    end
+    render :json => (status == :ok ? sensing_task_responses.to_json : ''), :status => status
+  end
+
+  def get_response
+    status = :ok
+    data = []
+    sensing_task_response = SensingResponse.find(params[:response_id])
+    if sensing_task_response.nil?
+      status = :bad_request
+    else
+      begin
+        sensing_task_response.sensing_response_items.each do |response_item|
+          sensor_data = response_item.sensing_response_data.as_json.merge(:type => response_item.sensing_response_data_type)
+          data << sensor_data
+        end
+      rescue Exception => e
+        status = :internal_server_error
+        Rails.logger.error(e.message)
+        Rails.logger.error(e.backtrace.join("\n"))
+      end
+    end
+    render :json => (status == :ok ? data.to_json : ''), :status => status
   end
 
   def fetch_sensing_data_types
-    sensing_data_types = SensingDataType.order(:name).collect{|type| {:name => type.name, :enabled => type.enabled, :id => type.id} }
-    render :json => sensing_data_types.to_json
+    status = :ok
+    begin
+      sensing_data_types = SensingDataType.order(:name).collect{|type| {:name => type.name, :enabled => type.enabled, :id => type.id} }
+    rescue Exception => e
+      status = :internal_server_error
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+    end
+    render :json => (status == :ok ? sensing_data_types.to_json : ''), :status => status
   end
 
   def publish_new
@@ -155,7 +207,7 @@ class SensingTasksController < ApplicationController
       Rails.logger.error(e.backtrace.join("\n"))
     end
 
-    render :json => (status == :ok ? '' : error_message), :status => status 
+    render :json => '', :status => status 
   end
 
   private

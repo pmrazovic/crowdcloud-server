@@ -161,34 +161,51 @@ class HitsController < ApplicationController
   # HIT Api -------------------
 
   def list_hits
-    hits = Hit.where(:status => HitStatus::PUBLISHED.to_s)
-                     .order("created_at DESC")
-                     .paginate(:page => params[:page], :per_page => 20)
-                     .collect{ |oc| { :id => oc.id, 
-                                      :question => oc.question,
-                                      :published_at => oc.published_at,
-                                      :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
-                                      :crowdsourcer_type => oc.crowdsourcer_type,
-                                      :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
-                                    }
-    render :json => hits.to_json
+    status = :ok
+    begin
+      hits = Hit.where(:status => HitStatus::PUBLISHED.to_s)
+                       .order("created_at DESC")
+                       .paginate(:page => params[:page], :per_page => 20)
+                       .collect{ |oc| { :id => oc.id, 
+                                        :question => oc.question,
+                                        :published_at => oc.published_at,
+                                        :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                                        :crowdsourcer_type => oc.crowdsourcer_type,
+                                        :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
+                                      }
+    rescue Exception => e
+      status = :internal_server_error
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+    end  
+    render :json => (status == :ok ? hits.to_json : ''), :status => status
   end
 
   def get_hit
+    status = :ok
     oc = Hit.find(params[:id])
-    hit = { :id => oc.id, 
-            :question => oc.question,
-            :description => oc.description,
-            :created_at => oc.created_at,
-            :published_at => oc.published_at,
-            :choices => oc.hit_choices.order("id ASC").collect { |c| {:id => c.id, :description => c.description} },
-            :context_data_types => oc.sensing_data_types.collect { |t| t.name },
-            :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
-            :crowdsourcer_type => oc.crowdsourcer_type,
-            :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
-
+    if oc.nil?
+      status = :bad_request
+    else
+      begin
+        hit = { :id => oc.id, 
+                :question => oc.question,
+                :description => oc.description,
+                :created_at => oc.created_at,
+                :published_at => oc.published_at,
+                :choices => oc.hit_choices.order("id ASC").collect { |c| {:id => c.id, :description => c.description} },
+                :context_data_types => oc.sensing_data_types.collect { |t| t.name },
+                :crowdsourcer => (oc.crowdsourcer_type == 'Account' ? "#{oc.crowdsourcer.first_name} #{oc.crowdsourcer.last_name}" : "#{oc.crowdsourcer.uuid}"),
+                :crowdsourcer_type => oc.crowdsourcer_type,
+                :responded => !oc.hit_responses.where(:device_id => params[:device_id]).blank? }
+      rescue Exception => e
+        status = :internal_server_error
+        Rails.logger.error(e.message)
+        Rails.logger.error(e.backtrace.join("\n"))
+      end  
+    end
     puts params.inspect
-    render :json => hit.to_json
+    render :json => (status == :ok ? hit.to_json : ''), :status => status
   end
 
   private
