@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   post 'api/sensing_responses' => 'sensing_responses#create'
   post 'api/hit_responses' => 'hit_responses#create'
   post 'api/devices/register' => 'devices#register'
+  post 'api/devices/background_tracking' => 'devices#background_tracking'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

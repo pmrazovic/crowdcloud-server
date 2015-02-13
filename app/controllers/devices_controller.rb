@@ -1,9 +1,9 @@
 require 'android_sensor_type'
 
 class DevicesController < ApplicationController
-  skip_before_filter :authenticate_account!, :only => [:register]
-  skip_before_filter :verify_authenticity_token, :only => [:register], :if => Proc.new { |c| c.request.format == 'application/json' }
-  load_and_authorize_resource :except => [:register]
+  skip_before_filter :authenticate_account!, :only => [:register, :background_tracking]
+  skip_before_filter :verify_authenticity_token, :only => [:register, :background_tracking], :if => Proc.new { |c| c.request.format == 'application/json' }
+  load_and_authorize_resource :except => [:register, :background_tracking]
 
   def index
     @devices = Device.all.order("created_at DESC").paginate(:page => params[:page], :per_page => 21)
@@ -93,8 +93,29 @@ class DevicesController < ApplicationController
     @device = Device.find_by_id(params[:id])
   end
 
+
+  def background_tracking
+    status = :ok
+    begin
+      @device = Device.find_by_id(params[:id])
+      @device.background_tracks.create!( params[:location].permit( :bearing,
+                                                                   :latitude,
+                                                                   :longitude,
+                                                                   :altitude,
+                                                                   :accuracy,
+                                                                   :speed,
+                                                                   :recorded_at ))
+    rescue Exception => e
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+      status = :internal_server_error
+    end
+
+    render :json => '', :status => status
+  end
+
   private
     def device_params
-      params.require(:device).permit(:uuid, :push_id, :model, :version, :platform)
+      params.require(:device).permit(:id, :uuid, :push_id, :model, :version, :platform)
     end
 end
