@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   get  'api/fetch_sensing_data_types' => 'sensing_tasks#fetch_sensing_data_types'
   get  'api/hits' => 'hits#list_hits'
   get  'api/hits/:id' => 'hits#get_hit'
+  get  'api/hits/:id/responses' => 'hits#get_responses'
+  get  'api/hits/:task_id/responses/:response_id' => 'hits#get_response'
   post 'api/sensing_responses' => 'sensing_responses#create'
   post 'api/hit_responses' => 'hit_responses#create'
   post 'api/devices/register' => 'devices#register'

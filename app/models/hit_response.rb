@@ -3,5 +3,5 @@ class HitResponse < ActiveRecord::Base
   belongs_to :device
   belongs_to :hit_choice
   validates  :hit, :device, :presence => true
-  has_many :sensing_responses, :as => :sensable, :dependent => :destroy
+  has_one    :sensing_response, :as => :sensable, :dependent => :destroy
 end

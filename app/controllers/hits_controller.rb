@@ -2,10 +2,10 @@ require 'hit_status'
 class HitsController < ApplicationController
   before_action :set_hit, only: [:show, :edit, :update, :destroy, :delete, :confirm_publish ,:publish, 
                                  :devices, :step_2, :confirm_step_2, :step_3, :confirm_step_3, :step_4, 
-                                 :confirm_step_4, :finish_formulation, :manage_hit_choices, :responses]
-  skip_before_filter :authenticate_account!, :only => [:list_hits, :get_hit]
-  load_and_authorize_resource :except => [:list_hits, :get_hit]
-  skip_before_filter :verify_authenticity_token, :only => [:list_hits], :if => Proc.new { |c| c.request.format == 'application/json' }
+                                 :confirm_step_4, :finish_formulation, :manage_hit_choices, :responses, :get_responses]
+  skip_before_filter :authenticate_account!, :only => [:list_hits, :get_hit, :get_responses, :get_response]
+  load_and_authorize_resource :except => [:list_hits, :get_hit, :get_responses, :get_response]
+  skip_before_filter :verify_authenticity_token, :only => [:list_hits, :get_responses, :get_response], :if => Proc.new { |c| c.request.format == 'application/json' }
 
   def index
     @hits = Hit.order("created_at DESC").paginate(:page => params[:page], :per_page => 20)
@@ -206,6 +206,48 @@ class HitsController < ApplicationController
     end
     puts params.inspect
     render :json => (status == :ok ? hit.to_json : ''), :status => status
+  end
+
+  def get_responses
+    status = :ok
+    begin
+      hit_responses = @hit.hit_responses
+                          .joins(:device)
+                          .order(:created_at)
+                          .paginate(:page => params[:page], :per_page => 20)
+                          .select("hit_responses.id, hit_responses.created_at, devices.uuid")
+                          .collect{ |r| { :id => r.id,
+                                          :created_at => r.created_at,
+                                          :device_uuid => r.uuid } }
+    rescue Exception => e
+      status = :internal_server_error
+      Rails.logger.error(e.message)
+      Rails.logger.error(e.backtrace.join("\n"))
+    end
+    render :json => (status == :ok ? hit_responses.to_json : ''), :status => status
+  end
+
+  def get_response
+    status = :ok
+    return_data = {:sensor_data => []}
+    hit_response = HitResponse.find(params[:response_id])
+    if hit_response.nil?
+      status = :bad_request
+    else
+      begin
+        unless hit_response.sensing_response.nil?
+          hit_response.sensing_response.sensing_response_items.each do |response_item|
+            return_data[:sensor_data] << response_item.sensing_response_data.as_json.merge(:type => response_item.sensing_response_data_type)
+          end
+          return_data[:choice] = hit_response.hit_choice.description
+        end
+      rescue Exception => e
+        status = :internal_server_error
+        Rails.logger.error(e.message)
+        Rails.logger.error(e.backtrace.join("\n"))
+      end
+    end
+    render :json => (status == :ok ? return_data.to_json : ''), :status => status
   end
 
   private
