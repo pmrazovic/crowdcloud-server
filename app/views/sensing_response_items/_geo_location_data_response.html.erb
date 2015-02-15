@@ -42,7 +42,7 @@
 
     <tr>
       <td colspan="2">
-        <%= render :partial => "sensing_response_items/google_map", :locals => { :latitude => data.latitude, :longitude => data.longitude } %>
+        <%= render :partial => "sensing_response_items/leaflet_map", :locals => { :latitude => data.latitude, :longitude => data.longitude } %>
       </td>
     </tr>
   </table>

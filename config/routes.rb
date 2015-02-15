@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'unregister'
       get 'sensors'
       get 'statistics'
+      get 'mobility_profile'
       get 'responses'
       get 'compose_message'
       post 'push_message'

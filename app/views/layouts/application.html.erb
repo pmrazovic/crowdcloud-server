@@ -8,7 +8,8 @@
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
-    <%= yield(:google_maps_api) if content_for?(:google_maps_api) %>
+    <%= yield(:leaflet_response_map) if content_for?(:leaflet_response_map) %>
+    <%= yield(:leaflet_mobility_profile_map) if content_for?(:leaflet_mobility_profile_map) %>
   </head>
   <body>
 

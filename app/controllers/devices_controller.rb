@@ -89,6 +89,10 @@ class DevicesController < ApplicationController
     @device = Device.find_by_id(params[:id])
   end
 
+  def mobility_profile
+    @device = Device.find_by_id(params[:id])
+  end
+
   def statistics
     @device = Device.find_by_id(params[:id])
   end

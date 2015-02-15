@@ -1,0 +1,27 @@
+<ol class="breadcrumb">
+  <li><%= link_to '<i class="fa fa-laptop"></i> Devices'.html_safe, devices_path %></li>
+  <li><%= link_to @device.uuid, @device %></li>
+  <li class="active">Mobility profile</li>
+</ol>
+<%= render :partial => "side_navigation" %>
+
+<div class="col-lg-9">
+  <div id="map" style="height: 500px;"></div>
+
+</div>
+
+<% content_for(:leaflet_mobility_profile_map) do %>
+  <%= javascript_include_tag "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js" %>
+  <%= stylesheet_link_tag "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" %>
+  <script type="text/javascript">
+  $( document ).ready(function() {
+    var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      }),
+      latlng = L.latLng(0,0);
+
+    var map = L.map('map', { center: latlng, zoom: 13, layers: [tiles] });
+  });
+  </script>
+<% end %>

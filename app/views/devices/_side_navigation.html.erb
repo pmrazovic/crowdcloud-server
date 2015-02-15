@@ -8,6 +8,9 @@
   <% if can? :sensors, @device %>
     <%= link_to "<i class=\"fa fa-tachometer\"></i> Sensor information".html_safe, sensors_device_path(@device), :class => "list-group-item #{'active' if controller.action_name == "sensors"}" %>
   <% end %>
+  <% if can? :mobility_profile, @device %>
+    <%= link_to "<i class=\"fa fa-map-marker\"></i> Mobility profile".html_safe, mobility_profile_device_path(@device), :class => "list-group-item #{'active' if controller.action_name == "mobility_profile"}" %> 
+  <% end %>
   <% if can? :responses, @device %>
     <%= link_to "<i class=\"fa fa-cloud-download\"></i> Responses".html_safe, responses_device_path(@device), :class => "list-group-item #{'active' if controller.action_name == "responses"}" %>
   <% end %>
